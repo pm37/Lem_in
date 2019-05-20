@@ -6,21 +6,19 @@
 /*   By: pimichau <pimichau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/14 16:14:17 by pimichau          #+#    #+#             */
-/*   Updated: 2019/05/18 12:22:08 by pimichau         ###   ########.fr       */
+/*   Updated: 2019/05/20 17:00:01 by pimichau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEM_IN_H
 # define LEM_IN_H
 
-# define glob->ant_nbr ANT_NBR
-
 typedef struct			t_room
 {
 	char				*name;
 	int					id;
-	int					coord_x;
-	int					coord_y;
+	int					x;
+	int					y;
 	t_room				*tunnels[];
 	int					ant_nbr;
 }						s_room;
