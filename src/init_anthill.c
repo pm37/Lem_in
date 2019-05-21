@@ -6,7 +6,7 @@
 /*   By: pimichau <pimichau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/14 14:37:43 by pimichau          #+#    #+#             */
-/*   Updated: 2019/05/21 15:25:27 by pimichau         ###   ########.fr       */
+/*   Updated: 2019/05/21 18:50:29 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int		init_ant_qty(char *line, t_anthill *anthill)
 {
 	int					i;
 	char				cpy[21];
-	unsigned long long	nbr;
+	unsigned long long	nb;
 
 	i = -1;
 	while (line[++i])
@@ -24,9 +24,9 @@ static int		init_ant_qty(char *line, t_anthill *anthill)
 			return (0);
 	if (i > 20)
 		return (0);
-	if (i == 20);
+	if (i == 20)
 	{
-		cpy = ft_strcpy(cpy, line);
+		ft_strcpy(cpy, line);
 		cpy[19] = '\0';
 		if ((nb = ft_atoull(cpy)) > 1844674407370955161)
 			return (0);
@@ -48,21 +48,24 @@ static int		end_of_rooms(char *line)
 	return (0);
 }
 
-static int		room_checker(char **tab)
+static int		room_checker(t_anthill *anthill, char **tab)
 {	
-	char 	**tab;
 	t_list	*elem;
+	t_room	*tmp;
 
 	if (tab[0] && tab[1] && tab[2] && !tab[3])
+	{
 		if (!ft_isinteger(tab[1]) || !ft_isinteger(tab[2]))
 			return (0);
+	}
 	else
 		return (0);
 	elem = anthill->rooms;
 	while (elem)
 	{
-		if (ft_strequ(elem->name, tab[0])
-		|| ft_atoi(tab[1]) == elem.x || ft_atoi(tab[2] == elem.y))
+		tmp = (t_room *)elem->content;
+		if (ft_strequ(tmp->name, tab[0])
+		|| (ft_atoi(tab[1]) == tmp->x && ft_atoi(tab[2]) == tmp->y))
 			return (0);
 		elem = elem->next;
 	}
@@ -78,15 +81,16 @@ static int		add_room(char *line, t_anthill *anthill)
 	if (line[0] == '#')
 		return (1);
 	tab = ft_strsplit(line, ' ');
-	if (!room_checker(tab, anthill))
+	if (!room_checker(anthill, tab))
 		return (ret_freetab(0, tab));
 	room.name = ft_strdup(tab[0]);
 	room.x = ft_atoi(tab[1]);
 	room.y = ft_atoi(tab[2]);
 	room.id = (anthill->room_qty)++;
-	if (!(new = ft_lstnew(&room, sizeof(room))))
+	room.tunnels = NULL;
+	if (!(new = ft_lstnew(&room, sizeof(t_room))))
 		return (0);
-	ft_lstappend(&(anthill->rooms), new);
+	ft_lstappend(&anthill->rooms, new);
 	return (1);
 }
 
@@ -94,7 +98,7 @@ int				create_anthill(t_anthill *anthill)
 {
 	char	*line;
 
-	if (!init_ant_qty(get_next_line(0, &line), anthill))
+	if (!get_next_line(0, &line) || !init_ant_qty(line, anthill))
 		return (0);
 	while (get_next_line(0, &line) > 0 && !end_of_rooms(line))
 	{
@@ -102,12 +106,15 @@ int				create_anthill(t_anthill *anthill)
 			return (ret_freeline(0, &line));
 		ft_strdel(&line);
 	}
-	if (!add_tunnel(line))
+	if (!add_tunnel(anthill, line))
+	{
+		ft_putendl("ok");
 		return (ret_freeline(0, &line));
+	}
 	ft_strdel(&line);
 	while (get_next_line(0, &line) > 0)
 	{
-		if (!add_tunnel(line, anthill))
+		if (!add_tunnel(anthill, line))
 			return (ret_freeline(0, &line));
 		ft_strdel(&line);
 	}

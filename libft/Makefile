@@ -6,7 +6,7 @@
 #    By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/07 17:52:27 by bwan-nan          #+#    #+#              #
-#    Updated: 2019/05/17 18:45:20 by bwan-nan         ###   ########.fr        #
+#    Updated: 2019/05/21 17:16:26 by bwan-nan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -120,6 +120,7 @@ SRC += ft_strr_notchr_index.c
 
 # ------------------------------------- Conversions -----------------------------------#
 SRC += ft_atoi.c
+SRC += ft_atoull.c
 SRC += ft_binatoi.c
 SRC += ft_itoa.c
 SRC += ft_itoa_base.c

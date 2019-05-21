@@ -6,9 +6,11 @@
 /*   By: pimichau <pimichau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/14 14:38:19 by pimichau          #+#    #+#             */
-/*   Updated: 2019/05/21 15:07:18 by pimichau         ###   ########.fr       */
+/*   Updated: 2019/05/21 17:46:08 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "lem_in.h"
 
 static void	init_anthill(t_anthill *anthill)
 {

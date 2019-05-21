@@ -6,9 +6,11 @@
 /*   By: pimichau <pimichau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/20 15:01:13 by pimichau          #+#    #+#             */
-/*   Updated: 2019/05/20 15:02:13 by pimichau         ###   ########.fr       */
+/*   Updated: 2019/05/21 16:50:59 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "lem_in.h"
 
 int		ret_freeline(int ret, char **line)
 {
