@@ -6,13 +6,13 @@
 /*   By: pimichau <pimichau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/14 14:37:43 by pimichau          #+#    #+#             */
-/*   Updated: 2019/05/20 17:02:12 by pimichau         ###   ########.fr       */
+/*   Updated: 2019/05/21 15:25:27 by pimichau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static int		init_ant_nbr(char *line, t_anthill *anthill)
+static int		init_ant_qty(char *line, t_anthill *anthill)
 {
 	int					i;
 	char				cpy[21];
@@ -33,7 +33,7 @@ static int		init_ant_nbr(char *line, t_anthill *anthill)
 		else if (nb == 1844674407370955161 && line[19] > '5')
 			return (0);
 	}
-	anthill->ant_nbr = ft_atoull(line);
+	anthill->ant_qty = ft_atoull(line);
 	return (1);
 }
 
@@ -83,18 +83,18 @@ static int		add_room(char *line, t_anthill *anthill)
 	room.name = ft_strdup(tab[0]);
 	room.x = ft_atoi(tab[1]);
 	room.y = ft_atoi(tab[2]);
-	room.id = (anthill->room_nbr)++;
+	room.id = (anthill->room_qty)++;
 	if (!(new = ft_lstnew(&room, sizeof(room))))
 		return (0);
 	ft_lstappend(&(anthill->rooms), new);
 	return (1);
 }
 
-int				init_anthill(t_anthill *anthill)
+int				create_anthill(t_anthill *anthill)
 {
 	char	*line;
 
-	if (!init_ant_nbr(get_next_line(0, &line), anthill))
+	if (!init_ant_qty(get_next_line(0, &line), anthill))
 		return (0);
 	while (get_next_line(0, &line) > 0 && !end_of_rooms(line))
 	{
