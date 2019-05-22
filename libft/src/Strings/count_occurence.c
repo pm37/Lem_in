@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcpy.c                                        :+:      :+:    :+:   */
+/*   count_occurence.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/07 17:55:12 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/05/22 17:50:22 by bwan-nan         ###   ########.fr       */
+/*   Created: 2019/05/22 13:10:11 by bwan-nan          #+#    #+#             */
+/*   Updated: 2019/05/22 13:11:02 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strcpy(char *dest, const char *src)
+int		count_occurence(char *str, char c)
 {
-	int i;
+	int		i;
+	int		count;
 
+	count = 0;
 	i = 0;
-	while (src[i])
+	while (str[i])
 	{
-		dest[i] = src[i];
+		if (str[i] == c)
+			count++;
 		i++;
 	}
-	dest[i] = '\0';
-	return (dest);
+	return (count);
 }

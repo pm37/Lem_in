@@ -6,7 +6,7 @@
 /*   By: pimichau <pimichau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/18 12:20:27 by pimichau          #+#    #+#             */
-/*   Updated: 2019/05/21 18:50:35 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/05/22 14:27:49 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,58 +26,68 @@ static int	tunnel_exists(t_list *origin, t_list *dest)
 	return (0);
 }
 
-static int	create_tunnel(t_list *room1, t_list *room2)
-{
-	t_list	*new;
-	t_list	cpy;
-	t_room	*tmp;
-
-	tmp = (t_room *)(room1->content);
-	if (tunnel_exists(tmp->tunnels, room2))
-		return (0);
-	if (!(new = ft_lstnew(&cpy, sizeof(t_list))))
-		return (0);
-	new->content = (void *)room2;
-	ft_lstappend(&tmp->tunnels, new);
-	return (1);
-}
-
-static int	tunnel_checker(t_anthill *anthill, char **tunnel)
+static int	rooms_exist(t_list *head, t_list **room1,
+			t_list **room2, char **rooms)
 {
 	t_list	*elem;
-	t_list	*room1;
-	t_list	*room2;
 	t_room	*tmp;
 	int		check;
 
 	check = 0;
-	if (tunnel[0][0] == '#')
-		return (1);
-	if (!tunnel[0] || !tunnel[1] || tunnel[2])
-		return (0);
-	elem = anthill->rooms;
+	elem = head;
 	while (elem && check < 2)
 	{
 		tmp = (t_room *)elem->content;
-		if (ft_strequ(tunnel[0], tmp->name) && ++check)
-			room1 = elem;
-		if (ft_strequ(tunnel[1], tmp->name) && ++check)
-			room2 = elem;
+		if (ft_strequ(rooms[0], tmp->name) && ++check)
+			*room1 = elem;
+		if (ft_strequ(rooms[1], tmp->name) && ++check)
+			*room2 = elem;
 		elem = elem->next;
 	}
-	if (!elem && check != 2)
+	return (check == 2);
+}
+
+static int	create_tunnel(t_list *room1, t_list *room2)
+{
+	t_list	*new_tunnel;
+	t_list	cpy;
+	t_room	*origin;
+
+	origin = (t_room *)(room1->content);
+	if (tunnel_exists(origin->tunnels, room2))
+		return (0);
+	if (!(new_tunnel = ft_lstnew(&cpy, sizeof(t_list))))
+		return (0);
+	new_tunnel->content = (void *)room2;
+	ft_lstappend(&origin->tunnels, new_tunnel);
+	return (1);
+}
+
+static int	tunnel_checker(t_anthill *anthill, char **rooms)
+{
+	t_list	*head;
+	t_list	*room1;
+	t_list	*room2;
+
+	room1 = NULL;
+	room2 = NULL;
+	if (rooms[0][0] == '#')
+		return (1);
+	head = anthill->rooms;
+	if (!rooms[0] || !rooms[1] || rooms[2]
+	|| !rooms_exist(head, &room1, &room2, rooms))
 		return (0);
 	return (create_tunnel(room1, room2) && create_tunnel(room2, room1));
 }
 
 int			add_tunnel(t_anthill *anthill, char *line)
 {
-	char	**tunnel;
+	char	**rooms;
 
-	if (!(tunnel = ft_strsplit(line, '-')))
+	rooms = NULL;
+	if (count_occurence(line, '-') != 1 || !(rooms = ft_strsplit(line, '-')))
 		return (0);
-	if (!tunnel_checker(anthill, tunnel))
-		return (ret_freetab(0, tunnel));
-	ft_putendl("OK");
-	return (ret_freetab(1, tunnel));
+	if (!tunnel_checker(anthill, rooms))
+		return (ret_freetab(0, rooms));
+	return (ret_freetab(1, rooms));
 }

@@ -1,29 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_count_occurence.c                               :+:      :+:    :+:   */
+/*   ft_strstr_delim.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/21 13:43:07 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/03/01 22:52:48 by bwan-nan         ###   ########.fr       */
+/*   Created: 2019/05/22 19:36:45 by bwan-nan          #+#    #+#             */
+/*   Updated: 2019/05/22 19:54:59 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_count_occurence(char *str, char c)
+int		ft_strstr_delim(const char *haystack, const char *needle, char delim)
 {
-	int		i;
-	int		count;
+	char	*found;
+	int		len;
 
-	count = 0;
-	i = 0;
-	while (str[i])
+	if (haystack && needle)
 	{
-		if (str[i] == c)
-			count++;
-		i++;
+		if (!(found = ft_strstr(haystack, needle)))
+			return (0);
+		len = ft_strlen(needle);
+		if (found == haystack)
+		{
+			if (!haystack[len] || haystack[len] == delim)
+				return (1);
+		}
+		else
+		{
+			if (*(found - 1) == delim && (!found[len] || found[len] == delim))
+				return (1);
+		}
 	}
-	return (count);
+	return (0);
 }

@@ -6,7 +6,7 @@
 #    By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/21 16:04:21 by bwan-nan          #+#    #+#              #
-#    Updated: 2019/05/21 17:08:24 by bwan-nan         ###   ########.fr        #
+#    Updated: 2019/05/22 12:53:22 by bwan-nan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,6 +56,7 @@ SRC += ret_print.c
 
 SRC += add_tunnels.c
 SRC += init_anthill.c
+SRC += add_rooms.c
 SRC += lem_in.c
 
 
