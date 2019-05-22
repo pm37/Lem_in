@@ -6,7 +6,7 @@
 /*   By: pimichau <pimichau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/14 16:14:17 by pimichau          #+#    #+#             */
-/*   Updated: 2019/05/21 18:25:55 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/05/22 20:42:49 by pimichau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,14 @@ typedef struct			s_anthill
 	unsigned long long	ant_qty;
 	int					room_qty;
 	t_list				*rooms;
+	t_list				*paths;
 }						t_anthill;
+
+typedef struct			s_path
+{
+	int					len;
+	char				*path;
+}						t_path;
 
 int		create_anthill(t_anthill *anthill);
 int		add_tunnel(t_anthill *anthill, char *line);

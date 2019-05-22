@@ -6,7 +6,7 @@
 /*   By: pimichau <pimichau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/14 14:38:19 by pimichau          #+#    #+#             */
-/*   Updated: 2019/05/21 17:46:08 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/05/22 20:42:51 by pimichau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static void	init_anthill(t_anthill *anthill)
 {
 	anthill->rooms = NULL;
+	anthill->paths = NULL;
 	anthill->room_qty = 0;
 }
 
