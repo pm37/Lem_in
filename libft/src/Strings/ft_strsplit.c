@@ -6,7 +6,7 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/16 16:11:43 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/04/24 15:18:35 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/05/23 17:18:08 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char			**ft_strsplit(char const *s, char c)
 	i = 0;
 	word_index = 0;
 	if (!s || !(tab = (char **)
-				malloc(sizeof(char *) * (ft_count_words(s, c) + 1))))
+	malloc(sizeof(char *) * (ft_count_words(s, c) + 1))))
 		return (NULL);
 	while (s[i])
 	{

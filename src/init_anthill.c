@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   checker.c                                          :+:      :+:    :+:   */
+/*   init_anthill.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pimichau <pimichau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/05/14 14:37:43 by pimichau          #+#    #+#             */
-/*   Updated: 2019/05/22 12:46:07 by bwan-nan         ###   ########.fr       */
+/*   Created: 2019/05/23 12:28:21 by bwan-nan          #+#    #+#             */
+/*   Updated: 2019/05/23 17:04:51 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,20 @@ static int		init_ant_qty(char *line, t_anthill *anthill)
 	return (1);
 }
 
+static int		end_of_rooms(char *line)
+{
+	if (line[0] == '#')
+		return (0);
+	if (ft_strchr(line, '-'))
+		return (1);
+	return (0);
+}
+
 int				create_anthill(t_anthill *anthill)
 {
 	char	*line;
 
+	//La 1ere ligne pourrait etre un commentaire
 	if (!get_next_line(0, &line) || !init_ant_qty(line, anthill))
 		return (0);
 	while (get_next_line(0, &line) > 0 && !end_of_rooms(line))

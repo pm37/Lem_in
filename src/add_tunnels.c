@@ -6,7 +6,7 @@
 /*   By: pimichau <pimichau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/18 12:20:27 by pimichau          #+#    #+#             */
-/*   Updated: 2019/05/22 14:27:49 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/05/23 17:18:41 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ int			add_tunnel(t_anthill *anthill, char *line)
 	char	**rooms;
 
 	rooms = NULL;
+	if (line[0] == '#')
+		return (1);
 	if (count_occurence(line, '-') != 1 || !(rooms = ft_strsplit(line, '-')))
 		return (0);
 	if (!tunnel_checker(anthill, rooms))
