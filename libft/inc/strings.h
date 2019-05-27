@@ -6,7 +6,7 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/01 22:11:22 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/05/22 19:48:50 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/05/27 12:19:27 by pimichau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,6 @@ int					count_occurence(char *str, char c);
 void				ft_strtoupper(char *str);
 void				ft_strlower(char *str);
 int					variadic_strjoin(char **ret, const char *format, ...);
-int					ft_strstr_delim(const char *haystack, const char *needle, char delim);
+char				*ft_strstr_delim(const char *haystack, const char *needle, char delim);
 
 #endif
