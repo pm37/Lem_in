@@ -6,12 +6,12 @@
 /*   By: pimichau <pimichau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 14:25:24 by pimichau          #+#    #+#             */
-/*   Updated: 2019/05/27 12:19:20 by pimichau         ###   ########.fr       */
+/*   Updated: 2019/05/29 13:37:00 by pimichau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-
+/*
 static int	add_path(t_anthill *anthill, char *found_path)
 {
 	t_path	new_path;
@@ -111,4 +111,4 @@ int			find_paths(t_anthill *anthill, t_list *position, char *path)
 	//debug
 	ft_printf("found path\n");
 	return (1);
-}
+}*/
