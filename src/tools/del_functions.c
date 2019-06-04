@@ -1,22 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstiter.c                                       :+:      :+:    :+:   */
+/*   del_functions.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/19 15:40:03 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/06/04 15:42:48 by bwan-nan         ###   ########.fr       */
+/*   Created: 2019/06/04 19:12:54 by bwan-nan          #+#    #+#             */
+/*   Updated: 2019/06/04 19:13:23 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "lem_in.h"
 
-void	ft_lstiter(t_list *lst, void (*f)(t_list *elem))
+static void		del_steps(void *content, size_t size)
 {
-	if (lst && f)
-	{
-		ft_lstiter(lst->next, f);
-		(*f)(lst);
-	}
+	if (content && size)
+		;
 }
+
+void			del_path(void *content, size_t size)
+{
+	t_path	*path;
+	t_list	*steps;
+
+	path = (t_path *)content;
+	steps = path->steps;
+	if (content && size)
+		ft_lstdel(&steps, del_steps);
+}
+

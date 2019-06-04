@@ -6,7 +6,7 @@
 #    By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/21 16:04:21 by bwan-nan          #+#    #+#              #
-#    Updated: 2019/05/31 17:46:12 by bwan-nan         ###   ########.fr        #
+#    Updated: 2019/06/04 19:14:23 by bwan-nan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,6 +54,10 @@ SRC += ret_freeline.c
 SRC += ret_freetab.c
 SRC += ret_print.c
 SRC += print_paths.c
+SRC += compare_steps.c
+SRC += clean_paths.c
+SRC += del_functions.c
+SRC += copy_functions.c
 
 SRC += lem_in.c
 SRC += add_tunnels.c
@@ -62,7 +66,6 @@ SRC += add_rooms.c
 SRC += find_paths.c
 SRC += init_paths.c
 SRC += add_paths.c
-SRC += copy_functions.c
 
 
 DSYMC = $(NAME).dSYM
@@ -72,6 +75,7 @@ OBJ = $(patsubst %.c, $(OPATH)%.o, $(SRC))
 vpath	%.c src/
 vpath	%.c src/tools/
 vpath	%.c src/add/
+vpath	%.c src/clean/
 vpath	%.c src/display/
 vpath	%.c src/init/
 vpath	%.h inc/

@@ -1,22 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstiter.c                                       :+:      :+:    :+:   */
+/*   compare_steps.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/19 15:40:03 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/06/04 15:42:48 by bwan-nan         ###   ########.fr       */
+/*   Created: 2019/06/04 16:55:59 by bwan-nan          #+#    #+#             */
+/*   Updated: 2019/06/04 16:59:25 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "lem_in.h"
 
-void	ft_lstiter(t_list *lst, void (*f)(t_list *elem))
+t_list		*compare_steps(t_list *l1, t_list *l2)
 {
-	if (lst && f)
+	t_list	*a;
+	t_list	*b;
+
+	while (l1 && l2)
 	{
-		ft_lstiter(lst->next, f);
-		(*f)(lst);
+		a = l1->content;
+		b = l2->content;
+		if (((t_room *)a->content) != ((t_room *)b->content))
+			return (l1);
+		l1 = l1->next;
+		l2 = l2->next;
 	}
+	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: pimichau <pimichau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/14 16:14:17 by pimichau          #+#    #+#             */
-/*   Updated: 2019/06/04 11:32:26 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/06/04 19:13:46 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,11 @@ typedef struct			s_anthill
 {
 	unsigned long long	ant_qty;
 	int					room_qty;
+	t_list				*rooms;
 	t_list				*start;
 	t_list				*end;
-	t_list				*rooms;
 	t_list				*paths;
+	t_list				*good_paths;
 }						t_anthill;
 
 typedef struct			s_path
@@ -60,6 +61,8 @@ int		ret_print(int ret, char *msg);
 void	free_tab(char **tab);
 int		copy_path(void *dest, void *src);
 int		copy_steps(void *dest, void *src);
+t_list	*compare_steps(t_list *l1, t_list *l2);
+void	del_path(void *content, size_t size);
 /*
 ** ---------------------------- ADD --------------------------------
 */
@@ -76,6 +79,10 @@ void	print_steps(t_list *steps);
 ** -------------------------- INIT --------------------------------- 
 */
 int		init_paths(t_anthill *anthill);
+/*
+** -------------------------- DEL ----------------------------------- 
+*/
+void	clean_paths(t_anthill *anthill);
 
 
 #endif
