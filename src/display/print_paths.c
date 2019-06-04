@@ -6,13 +6,13 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/31 13:49:27 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/05/31 13:51:32 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/06/04 11:32:08 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static void		print_steps(t_list *steps)
+void			print_steps(t_list *steps)
 {
 	t_list	*step;
 	t_list	*room;

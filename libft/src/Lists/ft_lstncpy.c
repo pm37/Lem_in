@@ -6,7 +6,7 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/08 19:10:52 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/05/17 20:05:26 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/06/04 11:28:56 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_list			*ft_lstncpy(t_list *source,
 		if (cpy)
 			if (cpy(node->content, source->content))
 				return (NULL);
-		ft_lstprepend(&copy, node);
+		ft_lstappend(&copy, node);
 		source = source->next;
 	}
 	return (copy);

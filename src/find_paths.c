@@ -6,20 +6,34 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/31 12:46:19 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/05/31 18:32:39 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/06/04 12:15:33 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-
-
-
 static int		room_visited(t_room *room)
 {
 	return (room->visited == true);
 }
+/*
+static int		get_shortest_path(t_anthill *anthill)
+{
+	t_list	*path;
+	t_list	*steps;
+	t_list	*room;
 
+	path = anthill->paths;
+	while (path)
+	{
+		steps = ((t_path *)path->content)->steps;
+		room = steps->content;
+		if (room->end != 1)
+			ft_lstdelone
+		path = path->next;
+	}
+}
+*/
 static int		complete_paths(t_anthill *anthill)
 {
 	t_list	*path;
@@ -36,7 +50,7 @@ static int		complete_paths(t_anthill *anthill)
 		while (tunnel)
 		{
 			room = tunnel->content;
-			if (i > 1 && !room_visited(room->content)) //buggy
+			if (i >= 1 && !room_visited(room->content))
 			{
 				if (!add_path(anthill, path, room))
 					return (0);
@@ -45,8 +59,8 @@ static int		complete_paths(t_anthill *anthill)
 			{
 				if (!(add_step(&((t_path *)(path->content))->steps, room)))
 					return (0);
+				i++;
 			}
-			i++;
 			tunnel = tunnel->next;
 		}
 		path = path->next;
@@ -54,20 +68,20 @@ static int		complete_paths(t_anthill *anthill)
 	return (1);
 }
 
-static int		end_found(t_list *paths)
+static int		end_found(t_anthill *anthill)
 {
-	t_list	*elem;
+	t_list	*path;
 	t_list	*steps;
 	t_list	*room;
 
-	elem = paths;
-	while (elem)
+	path = anthill->paths;
+	while (path)
 	{
-		steps = ((t_path *)elem->content)->steps;
+		steps = ((t_path *)path->content)->steps;
 		room = steps->content;
-		if (ft_strequ(((t_room *)room->content)->name, "end"))
+		if (((t_room *)room->content)->end == 1)
 			return (1);
-		elem = elem->next;
+		path = path->next;
 	}
 	return (0);
 }
@@ -76,9 +90,10 @@ int				find_paths(t_anthill *anthill)
 {
 	if (!init_paths(anthill))
 		return (0);
-	while (!end_found(anthill->paths))
+	while (!end_found(anthill))
 		if (!(complete_paths(anthill)))
 				return (0);
+	//get_shortest_path(anthill->paths);
 	print_paths(anthill->paths);
 	return (1);
 }

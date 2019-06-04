@@ -6,7 +6,7 @@
 /*   By: pimichau <pimichau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/14 16:14:17 by pimichau          #+#    #+#             */
-/*   Updated: 2019/05/31 18:32:41 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/06/04 11:32:26 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int		add_path(t_anthill *anthill, t_list *path, t_list *room);
 ** ------------------------- DISPLAY ------------------------------- 
 */
 void	print_paths(t_list *paths);
+void	print_steps(t_list *steps);
 /*
 ** -------------------------- INIT --------------------------------- 
 */
