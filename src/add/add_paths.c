@@ -6,7 +6,7 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/31 15:15:45 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/06/04 11:39:51 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/06/05 16:39:35 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int		duplicate_path(t_anthill *anthill, t_list *target)
 	return (1);
 }
 
-int				add_step(t_list **steps, t_list *room)
+int				add_step(t_anthill *anthill, t_list **steps, t_list *room)
 {
 	t_list	*new_step;
 
@@ -39,6 +39,8 @@ int				add_step(t_list **steps, t_list *room)
 		return (0);
 	new_step->content = (void *)room;
 	((t_room *)room->content)->visited = true;
+	if (((t_room *)room->content)->end != 1)
+		anthill->visited++;
 	ft_lstprepend(steps, new_step);
 	return (1);
 }
@@ -49,5 +51,7 @@ int				add_path(t_anthill *anthill, t_list *target, t_list *room)
 	if (!(duplicate_path(anthill, target)))
 		return (0);
 	((t_path *)anthill->paths->content)->steps->content = (void *)room;
+	((t_room *)room->content)->visited = true;
+	anthill->visited++;
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 19:04:27 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/06/04 19:14:32 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/06/05 17:18:44 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,37 @@ static void		reverse_back(t_list *paths)
 	}
 }
 
+int				check_dead_end(t_anthill *anthill)
+{
+	t_list	*path;
+	t_list	*step;
+	t_list	*tunnel;
+	t_list	*room;
+	int		visited;
+	int		tunnel_qty;
+	int		dead_end;
+
+	path = anthill->paths;
+	dead_end = 0;
+	while (path)
+	{
+		step = ((t_path *)path->content)->steps->content; 
+		tunnel = ((t_room *)step->content)->tunnels;
+		visited = 0;
+		tunnel_qty = 0;
+		while (tunnel && ++tunnel_qty)
+		{
+			room = (t_list *)tunnel->content;
+			visited += ((t_room *)room->content)->visited == true;
+			tunnel = tunnel->next;
+		}
+		if (((t_room *)step->content)->end != 1 && tunnel_qty == visited)
+			dead_end++;
+		path = path->next;
+	}
+	return (ft_lstcount(anthill->paths) == dead_end);
+}
+
 void			clean_paths(t_anthill *anthill)
 {
 	t_list	*path;
@@ -70,6 +101,7 @@ void			clean_paths(t_anthill *anthill)
 			tmp = path->next;
 			diff = compare_steps(steps, shortest_path);
 			reset_rooms(diff);
+			anthill->visited--;
 			ft_lstpop(&anthill->paths, path, del_path);
 			path = tmp;
 		}

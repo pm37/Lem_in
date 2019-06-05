@@ -6,7 +6,7 @@
 /*   By: pimichau <pimichau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/14 16:14:17 by pimichau          #+#    #+#             */
-/*   Updated: 2019/06/04 19:13:46 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/06/05 17:17:59 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,6 @@
 # include "libft.h"
 # include <stdbool.h>
 
-# define TRUE 1
-# define FALSE 0
-
 typedef struct			s_room
 {
 	char				*name;
@@ -26,7 +23,6 @@ typedef struct			s_room
 	int					x;
 	int					y;
 	int					end;
-	int					dead_end;
 	int					population;
 	bool				visited;
 	t_list				*tunnels;
@@ -36,6 +32,7 @@ typedef struct			s_anthill
 {
 	unsigned long long	ant_qty;
 	int					room_qty;
+	int					visited;
 	t_list				*rooms;
 	t_list				*start;
 	t_list				*end;
@@ -68,7 +65,7 @@ void	del_path(void *content, size_t size);
 */
 int		add_room(t_anthill *anthill, char *line);
 int		add_tunnel(t_anthill *anthill, char *line);
-int		add_step(t_list **steps, t_list *room);
+int		add_step(t_anthill *anthill, t_list **steps, t_list *room);
 int		add_path(t_anthill *anthill, t_list *path, t_list *room);
 /*
 ** ------------------------- DISPLAY ------------------------------- 
@@ -80,9 +77,10 @@ void	print_steps(t_list *steps);
 */
 int		init_paths(t_anthill *anthill);
 /*
-** -------------------------- DEL ----------------------------------- 
+** -------------------------- CLEAN ----------------------------------- 
 */
 void	clean_paths(t_anthill *anthill);
+int		check_dead_end(t_anthill *anthill);
 
 
 #endif

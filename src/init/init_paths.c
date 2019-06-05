@@ -6,7 +6,7 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/31 13:53:37 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/05/31 17:54:26 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/06/05 17:17:46 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int				init_paths(t_anthill *anthill)
 			return (0);
 		room = tunnel->content;
 		((t_room *)room->content)->visited = true;
+		anthill->visited++;
 	//	ft_printf("tunnel name = %s\n", ((t_room *)(room->content))->name);
 		if (!(new_step = ft_lstnew(new_step, sizeof(t_list))))
 			return (0);

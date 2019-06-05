@@ -6,7 +6,7 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/31 12:46:19 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/06/04 19:10:23 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/06/05 17:21:40 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,11 @@ static int		complete_paths(t_anthill *anthill)
 				if (!add_path(anthill, path, room))
 					return (0);
 			}
-			else if (!room_visited(room->content))
+			else if (!room_visited(room->content) && ++i)
 			{
-				if (!(add_step(&((t_path *)path->content)->steps, room)))
+				if (!(add_step(anthill, &((t_path *)path->content)->steps, room)))
 					return (0);
 				((t_path *)path->content)->len++;
-				i++;
 			}
 			tunnel = tunnel->next;
 		}
@@ -86,6 +85,7 @@ static int		end_found(t_anthill *anthill)
 	t_list	*path;
 	t_list	*steps;
 	t_list	*room;
+	t_room	*end;
 
 	path = anthill->paths;
 	while (path)
@@ -93,44 +93,46 @@ static int		end_found(t_anthill *anthill)
 		steps = ((t_path *)path->content)->steps;
 		room = steps->content;
 		if (((t_room *)room->content)->end == 1)
-			return (1); //a optimiser
+			return (1);
 		path = path->next;
 	}
+	end = ((t_room *)anthill->end->content);
+	if ((end->visited == true && anthill->visited == anthill->room_qty)
+	|| !ft_lstcount(anthill->paths))
+		return (-1); //a optimiser
 	return (0);
 }
 
 int				find_paths(t_anthill *anthill)
 {
+	int		ret;
+
 	if (!init_paths(anthill))
 		return (0);
-	while (!end_found(anthill))
-		if (!(complete_paths(anthill)))
-			return (0);
-	//print_paths(anthill->paths);
-	get_shortest_path(anthill);
-	//ft_putendl("SHORTEST------------");
-	//print_paths(anthill->good_paths);
-
-	clean_paths(anthill);
-	//ft_putendl("REV -----");
-//	print_paths(anthill->paths);
-	
-
-	while (!end_found(anthill))
-		if (!(complete_paths(anthill)))
-			return (0);
-//	print_paths(anthill->paths);
-	get_shortest_path(anthill);
-	ft_putendl("SHORTEST 2------------");
-	print_paths(anthill->good_paths);
-	clean_paths(anthill);
-//	ft_putendl("REV -----");
-//	print_paths(anthill->paths);
-/*	while (anthill->good_paths)
+	ret = 0;
+	while (ret != -1)
 	{
-		ft_printf("len = %d\n", ((t_path *)anthill->good_paths->content)->len);
-		anthill->good_paths = anthill->good_paths->next;
+		while (!(ret = end_found(anthill)))
+		{
+			if (check_dead_end(anthill) && (ret = -1))
+				break ;
+			if (!(complete_paths(anthill)))
+				return (0);	
+		}
+		if (ret == 1)
+		{
+			get_shortest_path(anthill);
+			clean_paths(anthill);
+		}
 	}
-*/
+/*	ft_printf("room qty = %d | visited = %d |ret = %d\n"
+			, anthill->room_qty
+			, anthill->visited
+			, ret);
+		*/	
+	ft_putendl("SHORTEST------------");
+	print_paths(anthill->good_paths);
+
+
 	return (1);
 }
