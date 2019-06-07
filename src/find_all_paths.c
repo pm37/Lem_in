@@ -6,7 +6,7 @@
 /*   By: pimichau <pimichau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 11:30:18 by pimichau          #+#    #+#             */
-/*   Updated: 2019/06/07 16:32:00 by pimichau         ###   ########.fr       */
+/*   Updated: 2019/06/07 16:47:14 by pimichau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ static int	is_visited(t_list *room, t_list *path)
 	step = step->next;
 	while (step)
 	{
+		ft_printf("room id = %d | step id = %d\n", ((t_room *)room->content)->id, ((t_room *)step->content)->id);
 		if (((t_room *)room->content)->id == ((t_room *)step->content)->id)
 			return (0);
 		step = step->next;
