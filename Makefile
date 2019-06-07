@@ -6,7 +6,7 @@
 #    By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/21 16:04:21 by bwan-nan          #+#    #+#              #
-#    Updated: 2019/06/04 19:14:23 by bwan-nan         ###   ########.fr        #
+#    Updated: 2019/06/07 14:44:43 by pimichau         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,6 +64,7 @@ SRC += add_tunnels.c
 SRC += init_anthill.c
 SRC += add_rooms.c
 SRC += find_paths.c
+SRC += find_all_paths.c
 SRC += init_paths.c
 SRC += add_paths.c
 

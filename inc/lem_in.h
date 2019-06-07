@@ -6,7 +6,7 @@
 /*   By: pimichau <pimichau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/14 16:14:17 by pimichau          #+#    #+#             */
-/*   Updated: 2019/06/05 17:17:59 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/06/07 14:48:02 by pimichau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,16 @@ typedef struct			s_anthill
 typedef struct			s_path
 {
 	int					len;
+	bool				stop;
 	t_list				*steps;
 }						t_path;
 
+/*
+** ------------------------ MAIN FUNCTIONS -------------------------
+*/
 int		create_anthill(t_anthill *anthill);
 int		find_paths(t_anthill *anthill);
+int		find_all_paths(t_anthill *anthill);
 
 /*
 ** ---------------------------- TOOLS ------------------------------

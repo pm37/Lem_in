@@ -6,7 +6,7 @@
 /*   By: pimichau <pimichau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/14 14:38:19 by pimichau          #+#    #+#             */
-/*   Updated: 2019/06/05 16:42:05 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/06/07 14:56:43 by pimichau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,9 @@ int				main(void)
 	if (!create_anthill(&anthill))
 		return (ret_print(0, "ERROR")); // free everything
 
-	if (!(find_paths(&anthill)))
+	if (!(find_all_paths(&anthill)))
 		return (0);
+	print_paths(anthill.paths);
 //	ft_printf("start name = %s\n", ((t_room *)(anthill.start->content))->name);
 //	ft_printf("end name = %s\n", ((t_room *)(anthill.end->content))->name);
 	return (0);
