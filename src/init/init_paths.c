@@ -6,7 +6,7 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/31 13:53:37 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/06/07 15:35:30 by pimichau         ###   ########.fr       */
+/*   Updated: 2019/06/10 17:06:21 by pimichau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static int		init_path(t_anthill *anthill)
 
 	origin.len = 1;
 	origin.stop = false;
+	origin.dead_end = false;
 	if (!(origin.steps = ft_lstnew(start, sizeof(t_list))))
 			return (0);
 	origin.steps->content = (void *)anthill->start;

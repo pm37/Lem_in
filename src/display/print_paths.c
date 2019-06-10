@@ -6,7 +6,7 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/31 13:49:27 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/06/05 18:06:48 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/06/10 14:33:06 by pimichau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ void			print_paths(t_list *paths)
 	i = 0;
 	while (path && ++i)
 	{
-		ft_printf("ID: %d, len = %d\n", i, ((t_path *)path->content)->len);
+		ft_printf("ID: %d, STOP = %s, len = %d\n", i, 
+		((t_path *)path->content)->stop ? "true" : "false", ((t_path *)path->content)->len);
 		steps = ((t_path *)(path->content))->steps;
 		print_steps(steps);
 		path = path->next;	

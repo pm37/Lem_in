@@ -6,7 +6,7 @@
 /*   By: pimichau <pimichau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/14 16:14:17 by pimichau          #+#    #+#             */
-/*   Updated: 2019/06/07 14:48:02 by pimichau         ###   ########.fr       */
+/*   Updated: 2019/06/10 18:37:41 by pimichau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ typedef struct			s_room
 	int					y;
 	int					end;
 	int					population;
+	bool				step_to_end;
 	bool				visited;
 	t_list				*tunnels;
 }						t_room;
@@ -44,6 +45,7 @@ typedef struct			s_path
 {
 	int					len;
 	bool				stop;
+	bool				dead_end;
 	t_list				*steps;
 }						t_path;
 

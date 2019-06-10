@@ -6,7 +6,7 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 12:44:36 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/06/05 17:09:20 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/06/10 18:37:43 by pimichau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ static int		init_room(t_anthill *anthill, t_room *room, char **tab)
 	room->id = (anthill->room_qty)++;
 	room->tunnels = NULL;
 	room->visited = false;
+	room->step_to_end = false;
 	return (1);
 }
 
