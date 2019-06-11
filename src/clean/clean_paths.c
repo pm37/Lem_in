@@ -6,13 +6,13 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 19:04:27 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/06/05 17:18:44 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/06/10 16:57:29 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-
+/*
 static int		common_first_step(t_list *steps, t_list *path)
 {
 	t_list	*room1;
@@ -33,7 +33,7 @@ static int		common_first_step(t_list *steps, t_list *path)
 static void		reset_rooms(t_list *steps)
 {
 	t_list	*room;
-	
+
 	while (steps)
 	{
 		room = steps->content;		
@@ -42,72 +42,123 @@ static void		reset_rooms(t_list *steps)
 	}
 }
 
-static void		reverse_back(t_list *paths)
+void			reset_steps(t_anthill *anthill, t_list *steps, int reverse)
 {
-	while (paths)
+	t_list	*shortest_path;
+	t_list	*path_steps;
+	t_list	*diff;
+
+	shortest_path = anthill->good_paths;
+	while (shortest_path)
 	{
-		ft_lstrev(&((t_path *)paths->content)->steps);
-		paths = paths->next;
+		path_steps = ((t_path *)shortest_path->content)->steps;
+		ft_lstrev(&steps);
+		if (reverse && common_first_step(path_steps, steps))
+		{
+			diff = compare_steps(steps, path_steps);
+			reset_rooms(diff);
+			anthill->visited--;
+		}
+		else if (!reverse && common_first_step(path_steps, steps))
+		{
+			diff = compare_steps(path_steps, steps);
+			reset_rooms(diff);
+			anthill->visited--;
+		}
+		ft_lstrev(&steps);
+		shortest_path = shortest_path->next;
 	}
 }
 
-int				check_dead_end(t_anthill *anthill)
+int				remove_relink(t_anthill *anthill, t_list *target
+		, t_list *associated_path)
 {
-	t_list	*path;
-	t_list	*step;
-	t_list	*tunnel;
+	t_list	*steps;
+	t_list	*associated_steps;
 	t_list	*room;
-	int		visited;
-	int		tunnel_qty;
-	int		dead_end;
+	t_list	*path;
 
 	path = anthill->paths;
-	dead_end = 0;
 	while (path)
 	{
-		step = ((t_path *)path->content)->steps->content; 
-		tunnel = ((t_room *)step->content)->tunnels;
-		visited = 0;
-		tunnel_qty = 0;
-		while (tunnel && ++tunnel_qty)
+		steps = ((t_path *)path->content)->steps;
+		room = steps->content;
+		if (room == target)
 		{
-			room = (t_list *)tunnel->content;
-			visited += ((t_room *)room->content)->visited == true;
-			tunnel = tunnel->next;
+			associated_steps = ((t_path *)associated_path->content)->steps;
+			if (ft_lstcount(steps) > ft_lstcount(associated_steps))
+			{
+				reset_steps(anthill, steps, 1);
+				ft_lstpop(&anthill->paths, path, del_path);
+			}
+			else
+			{
+				reset_steps(anthill, associated_steps, 1);
+				ft_lstpop(&anthill->paths, associated_path, del_path);
+			}
+			return (1);	
 		}
-		if (((t_room *)step->content)->end != 1 && tunnel_qty == visited)
-			dead_end++;
 		path = path->next;
 	}
-	return (ft_lstcount(anthill->paths) == dead_end);
+	return (0);
+}
+
+void			remove_blocking_path(t_anthill *anthill)
+{
+	t_list	*path;
+	t_list	*last_step;
+	t_list	*room;
+	t_list	*tunnel;
+	char	*name;
+
+	path = anthill->paths;
+	while (path)
+	{
+		last_step = ((t_path *)path->content)->steps;
+		room = last_step->content;
+		name = ((t_room *)room->content)->name;
+		tunnel = ((t_room *)room->content)->tunnels;
+		while (tunnel)
+		{
+			room = tunnel->content;
+			if (remove_relink(anthill, room, path))
+				break ;
+			tunnel = tunnel->next;
+		}
+		path = path->next;
+	}
 }
 
 void			clean_paths(t_anthill *anthill)
 {
 	t_list	*path;
-	t_list	*shortest_path;
-	t_list	*steps;
-	t_list	*diff;
-	t_list	*tmp;
+	t_list	*last_step;
+	t_list	*room;
+	t_list	*tunnel;
+	int		clean;
+	int		distance;
 
+//	remove_blocking_path(anthill);
 	path = anthill->paths;
-	shortest_path = ((t_path *)anthill->good_paths->content)->steps;
 	while (path)
 	{
-		ft_lstrev(&((t_path *)path->content)->steps);
-		steps = ((t_path *)path->content)->steps;
-		if (common_first_step(steps, shortest_path))
+		last_step = ((t_path *)path->content)->steps;
+		room = last_step->content;
+		distance = ((t_room *)room->content)->dist_to_start;
+		tunnel = ((t_room *)room->content)->tunnels;
+		clean = 1;
+		while (tunnel)
 		{
-			tmp = path->next;
-			diff = compare_steps(steps, shortest_path);
-			reset_rooms(diff);
-			anthill->visited--;
-			ft_lstpop(&anthill->paths, path, del_path);
-			path = tmp;
+			room = tunnel->content;
+			if (((t_room *)room->content)->dist_to_start <= distance)
+				clean = 0;
+
+			tunnel = tunnel->next;
 		}
-		else
-			path = path->next;
+		reset_steps(anthill, last_step, 0);
+		if (clean || ft_lstcount(tunnel) == 1)
+			ft_lstpop(&anthill->paths, path, del_path);
+		path = path->next;
 	}
-	reverse_back(anthill->paths);
 	((t_room *)anthill->end->content)->visited = false;
-}
+}*/
