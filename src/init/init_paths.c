@@ -12,48 +12,33 @@
 
 #include "lem_in.h"
 
-static int		init_path(t_anthill *anthill)
+int 					add_to_queue(t_list **queue, t_list *room)
 {
-	t_list	*new_path;
-	t_list	*start;
-	t_path	origin;
+	t_list	*new;
+	t_list	elem;
 
-	origin.len = 1;
-	if (!(origin.steps = ft_lstnew(start, sizeof(t_list))))
+	if (!(new = ft_lstnew(&elem, sizeof(t_list)))
 		return (0);
-	origin.steps->content = (void *)anthill->start;
-	if (!(new_path = ft_lstnew(&origin, sizeof(t_path))))
-		return (0);
-	((t_room *)anthill->start->content)->visited = true;
-	ft_lstprepend(&anthill->paths, new_path);
+	new->content = (void *)room;
+	ft_lstappend(queue, new);
 	return (1);
 }
 
-int				init_paths(t_anthill *anthill)
+int 					init_paths(t_anthill *anthill, t_list *queue)
 {
-	t_list	*new_step;
-	t_list	*room;
+	t_list	*start;
 	t_list	*tunnel;
+	t_list	*room;
 
-	room = anthill->start;
-	tunnel = ((t_room *)(room->content))->tunnels;
+	start = anthill->start;
+	tunnel = ((t_room *)start->content)->tunnels;
 	while (tunnel)
 	{
 		room = tunnel->content;
-		if (((t_room *)room->content)->visited == false)
-		{
-			if (!init_path(anthill))
-				return (0);
-			room = tunnel->content;
-			((t_room *)room->content)->visited = true;
-			anthill->visited++;
-			if (!(new_step = ft_lstnew(new_step, sizeof(t_list))))
-				return (0);
-			new_step->content = (void *)room;
-			ft_lstprepend(&((t_path *)(anthill->paths->content))->steps, new_step);
-		}
+		((t_room *)room->content)->previous = anthill->start;
+		if (!add_to_queue(&queue, room))
+			return (0);
 		tunnel = tunnel->next;
 	}
 	return (1);
 }
-

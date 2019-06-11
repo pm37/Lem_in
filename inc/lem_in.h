@@ -26,6 +26,8 @@ typedef struct			s_room
 	int					population;
 	bool				visited;
 	t_list				*tunnels;
+	t_list				*previous;
+	t_list				*next;
 }						t_room;
 
 typedef struct			s_anthill
@@ -34,19 +36,10 @@ typedef struct			s_anthill
 	int					room_qty;
 	int					visited;
 	int				max_flow;
-	int				residual_capacity;
 	t_list				*rooms;
 	t_list				*start;
 	t_list				*end;
-	t_list				*paths;
-	t_list				*good_paths;
 }						t_anthill;
-
-typedef struct			s_path
-{
-	int					len;
-	t_list				*steps;
-}						t_path;
 
 int		create_anthill(t_anthill *anthill);
 int		find_paths(t_anthill *anthill);
@@ -70,16 +63,16 @@ int		add_tunnel(t_anthill *anthill, char *line);
 int		add_step(t_anthill *anthill, t_list **steps, t_list *room);
 int		add_path(t_anthill *anthill, t_list *path, t_list *room);
 /*
-** ------------------------- DISPLAY ------------------------------- 
+** ------------------------- DISPLAY -------------------------------
 */
 void	print_paths(t_list *paths);
 void	print_steps(t_list *steps);
 /*
-** -------------------------- INIT --------------------------------- 
+** -------------------------- INIT ---------------------------------
 */
 int		init_paths(t_anthill *anthill);
 /*
-** -------------------------- CLEAN ----------------------------------- 
+** -------------------------- CLEAN -----------------------------------
 */
 void	clean_paths(t_anthill *anthill);
 int		check_dead_end(t_anthill *anthill);

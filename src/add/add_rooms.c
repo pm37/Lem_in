@@ -13,7 +13,7 @@
 #include "lem_in.h"
 
 static int		room_checker(t_anthill *anthill, char **tab)
-{	
+{
 	t_list	*elem;
 	t_room	*tmp;
 
@@ -80,6 +80,8 @@ static int		init_room(t_anthill *anthill, t_room *room, char **tab)
 	room->y = ft_atoi(tab[2]);
 	room->id = (anthill->room_qty)++;
 	room->tunnels = NULL;
+	room->previous = NULL;
+	room->next = NULL;
 	room->visited = false;
 	return (1);
 }
