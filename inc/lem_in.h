@@ -6,7 +6,7 @@
 /*   By: pimichau <pimichau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/14 16:14:17 by pimichau          #+#    #+#             */
-/*   Updated: 2019/06/10 17:31:18 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/06/11 14:31:56 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,11 @@ typedef struct			s_room
 
 typedef struct			s_anthill
 {
-	unsigned long long	ant_qty;
+	int				ant_qty;
 	int					room_qty;
 	int					visited;
+	int				max_flow;
+	int				residual_capacity;
 	t_list				*rooms;
 	t_list				*start;
 	t_list				*end;
@@ -43,7 +45,6 @@ typedef struct			s_anthill
 typedef struct			s_path
 {
 	int					len;
-	bool				explored;
 	t_list				*steps;
 }						t_path;
 

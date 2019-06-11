@@ -6,7 +6,7 @@
 /*   By: pimichau <pimichau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/14 14:38:19 by pimichau          #+#    #+#             */
-/*   Updated: 2019/06/07 00:05:08 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/06/11 14:42:28 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ static void		init_anthill(t_anthill *anthill)
 	anthill->end = NULL;
 	anthill->good_paths = NULL;
 	anthill->room_qty = 0;
+	anthill->max_flow = 0;
+	anthill->residual_capacity = 0;
 	anthill->visited = 2;
 }
 
@@ -30,10 +32,9 @@ int				main(void)
 	init_anthill(&anthill);
 	if (!create_anthill(&anthill))
 		return (ret_print(0, "ERROR")); // free everything
-
+	ft_printf("max_flow = %d\n", anthill.max_flow);
+	ft_putendl("ok");
 	if (!(find_paths(&anthill)))
 		return (0);
-//	ft_printf("start name = %s\n", ((t_room *)(anthill.start->content))->name);
-//	ft_printf("end name = %s\n", ((t_room *)(anthill.end->content))->name);
 	return (0);
 }

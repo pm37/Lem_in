@@ -6,7 +6,7 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/23 12:28:21 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/06/05 13:32:35 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/06/11 14:38:10 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,33 @@ static int		end_of_rooms(char *line)
 	return (0);
 }
 
+static int		get_min(int a, int b, int c)
+{
+	int	min;
+
+	if (a < b)
+	{
+		min = a;
+		if (c < a)
+			min = c;
+	}
+	else
+	{
+		min = b;
+		if (c < b)
+			min = c;
+	}
+	return (min);
+}
+
+static int		count_links(t_list *room)
+{
+	t_list	*tunnels;
+
+	tunnels = ((t_room *)room->content)->tunnels;
+	return (ft_lstcount(tunnels));
+}
+
 int				create_anthill(t_anthill *anthill)
 {
 	char	*line;
@@ -68,5 +95,7 @@ int				create_anthill(t_anthill *anthill)
 			return (ret_freeline(0, &line));
 		ft_strdel(&line);
 	}
+	anthill->max_flow = get_min(anthill->ant_qty
+	, count_links(anthill->start), count_links(anthill->end));
 	return (1);
 }
