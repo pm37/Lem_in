@@ -6,7 +6,7 @@
 /*   By: pimichau <pimichau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/14 14:38:19 by pimichau          #+#    #+#             */
-/*   Updated: 2019/06/11 14:42:28 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/06/12 16:28:39 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int				main(void)
 	if (!create_anthill(&anthill))
 		return (ret_print(0, "ERROR")); // free everything
 	ft_printf("max_flow = %d\n", anthill.max_flow);
-	ft_putendl("ok");
 	if (!(find_paths(&anthill)))
 		return (0);
 	return (0);
