@@ -6,12 +6,12 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/31 13:49:27 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/06/06 23:27:09 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/06/12 23:47:53 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-
+/*
 void			print_steps(t_list *steps)
 {
 	t_list	*step;
@@ -44,4 +44,4 @@ void			print_paths(t_list *paths)
 		path = path->next;	
 	}
 }
-
+*/

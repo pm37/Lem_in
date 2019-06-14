@@ -6,7 +6,7 @@
 /*   By: pimichau <pimichau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/14 16:14:17 by pimichau          #+#    #+#             */
-/*   Updated: 2019/06/11 14:31:56 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/06/13 00:26:02 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,37 +19,32 @@
 typedef struct			s_room
 {
 	char				*name;
-	int					id;
+	int					path_id;
 	int					x;
 	int					y;
 	int					end;
-	bool 				in_goodpath;
 	bool				visited;
+	t_list			*next;
+	t_list			*previous;
 	t_list				*tunnels;
-	t_list				*previous;
-	t_list				*next;
 }						t_room;
 
 typedef struct			s_anthill
 {
 	int				ant_qty;
 	int					room_qty;
-	int					visited;
-	int				max_flow;
-	int				residual_capacity;
+	int 			rounds;
+	int 			id;
 	t_list				*rooms;
 	t_list				*start;
 	t_list				*end;
-	t_list				*paths;
-	t_list				*good_paths;
 }						t_anthill;
 
-typedef struct			s_path
+typedef struct			s_tunnel
 {
-	int					len;
-	bool 				deviation;
-	t_list				*steps;
-}						t_path;
+	int			usage;
+	t_list			*room;
+}				t_tunnel;
 
 int		create_anthill(t_anthill *anthill);
 int		find_paths(t_anthill *anthill);
@@ -70,8 +65,8 @@ void	del_path(void *content, size_t size);
 */
 int		add_room(t_anthill *anthill, char *line);
 int		add_tunnel(t_anthill *anthill, char *line);
-int		add_step(t_anthill *anthill, t_list **steps, t_list *room);
-int		add_path(t_anthill *anthill, t_list *path, t_list *room);
+int		add_step(t_list **steps, t_list *room);
+int		add_path(t_list **paths);
 /*
 ** ------------------------- DISPLAY -------------------------------
 */
@@ -86,6 +81,8 @@ int		init_paths(t_anthill *anthill);
 */
 void	clean_paths(t_anthill *anthill);
 int		check_dead_end(t_anthill *anthill);
+void 	del_steps(void *content, size_t size);
+}
 
 
 #endif

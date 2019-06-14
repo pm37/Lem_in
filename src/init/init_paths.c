@@ -6,12 +6,12 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/31 13:53:37 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/06/12 16:28:25 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/06/13 00:21:02 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-
+/*
 static int		init_path(t_anthill *anthill)
 {
 	t_list	*new_path;
@@ -57,3 +57,4 @@ int				init_paths(t_anthill *anthill)
 	}
 	return (1);
 }
+*/

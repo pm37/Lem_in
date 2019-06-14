@@ -6,183 +6,178 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/31 12:46:19 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/06/12 16:41:23 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/06/13 00:46:44 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static int		room_visited(t_room *room)
+static int 			check_tunnel(t_list *current, t_list *tunnel)
 {
-	return (room->visited == true);
+	t_list	*ptr;
+	t_room	*dest;
+	t_room 	*src;
+
+	ptr = tunnel->content;
+	src = (t_room *)current->content;
+	dest = (t_room *)ptr->content;
+	return (dest->visited == true || ptr->usage == -1
+	|| (src->deviation == true && ptr->usage == 0));
 }
 
-static void 	setflags_in_goodpath(t_list *path)
+static int 			going_to_deviate(t_list *current, t_list *room)
 {
-	t_list	*step;
-	t_list 	*room;
+	t_room 	*src;
+	t_room 	*dest;
+	t_list	*tunnel;
+	int 		tunnel_used;
 
-	step = ((t_path *)path->content)->steps;
-	while (step)
-	{
-		room = step->content;
-		if (((t_room *)room->content)->end == -1)
-			((t_room *)room->content)->in_goodpath = true;
-		step = step->next;
-	}
-}
-
-static void		get_shortest_path(t_anthill *anthill)
-{
-	t_list	*path;
-	t_list	*steps;
-	t_list	*room;
-	t_list	*previous;
-
-	path = anthill->paths;
-	previous = NULL;
-	while (path)
-	{
-		steps = ((t_path *)path->content)->steps;
-		room = steps->content;
-		if (((t_room *)room->content)->end == 1)
-		{
-			if (previous)
-			previous->next = path->next;
-			else
-			anthill->paths = anthill->paths->next;
-			path->next = NULL;
-			ft_lstrev(&((t_path *)path->content)->steps);
-			ft_lstprepend(&anthill->good_paths, path);
-			setflags_in_goodpath(path);
-			break ;
-		}
-		previous = path;
-		path = path->next;
-	}
-}
-
-static int 		get_next_step(t_anthill *anthill, t_list *path, t_list *tunnel)
-{
-	t_list	*room;
-	bool 		in_goodpath;
-	int 		i;
-
-	i = 0;
+	tunnel_used = 0;
+	src = (t_room *)current->content;
+	dest = (t_room *)room->content;
+	tunnel = dest->tunnels;
 	while (tunnel)
 	{
-		room = tunnel->content;
-		in_goodpath = ((t_room *)room->content)->in_goodpath;
-		if (i >= 1 && (!room_visited(room->content) || in_goodpath))
+		if ((t_tunnel *)tunnel->content)->usage == 1)
 		{
-			if (!add_path(anthill, path, room))
-				return (0);
-			((t_path *)path->content)->deviation = in_goodpath;
-		}
-		else if ((!room_visited(room->content) || in_goodpath) && ++i)
-		{
-			if (!(add_step(anthill, &((t_path *)path->content)->steps, room)))
-				return (0);
-			((t_path *)path->content)->len++;
-			((t_path *)path->content)->deviation = in_goodpath;
+			tunnel_used = 1;
+			break ;
 		}
 		tunnel = tunnel->next;
 	}
-	return (1);
+	return (!src->deviation && tunnel_used && src->path_id != dest->path_id);
 }
 
-static int 		start_deviation(t_anthill *anthill, t_list *path, t_list *room)
+static int 			complete_queue(t_list *queue)
 {
-	t_list *previous;
-
-	previous = ((t_room *)room->content)->previous;
-
-	if (((t_room *)previous->content)->end != 0)
-	{
-		if (!(add_step(anthill, &((t_path *)path->content)->steps, room)))
-			return (0);
-		((t_path *)path->content)->deviation = false;
-	}
-	return (1);
-}
-
-static int 		continue_deviation(t_anthill *anthill, t_list *path, t_list *room)
-{
-
-}
-
-static int		complete_paths(t_anthill *anthill)
-{
-	t_list	*path;
-	t_list	*tunnels;
+	t_list	*tunnel;
 	t_list	*room;
+	t_list	*current;
 
-	path = anthill->paths;
-	while (path)
+	room = queue;
+	current = room;
+	tunnel = ((t_room *)room->content)->tunnels;
+	while (tunnel)
 	{
-		room = ((t_list *)((t_path *)(path->content))->steps->content);
-		tunnels = ((t_room *)(room->content))->tunnels;
-		if (((t_room *)room->content)->in_goodpath)
-		{
-			if (((t_path *)path->content)->deviation)
-			{
-				if (!start_deviation(anthill, path, room))
-					return (0);
-			}
-			else
-			{
-				if (!continue_deviation(anthill, path, room))
-					return (0);
-			}
-		}
-		else if (!get_next_step(anthill, path, tunnels))
-			return (0);
-		path = path->next;
+		if (check_tunnel(current, tunnel) && (tunnel = tunnel->next))
+			continue ;
+		room = ((t_tunnel *)tunnel->content)->room;
+		add_to_queue(queue, room);
+		((t_room *)room->content)->previous = current;
+		((t_room *)room->content)->visited = true;
+		if (going_to_deviate(current, room))
+			((t_room *)room->content)->deviation = true;
+		tunnel = tunnel->next;
 	}
-	return (1);
 }
 
-static int		end_found(t_anthill *anthill)
+static int			init_queue(t_list **queue, t_list **head, t_list *start)
 {
-	t_list	*path;
-	t_list	*steps;
-	t_list	*room;
+	t_list	new;
 
-	path = anthill->paths;
-	while (path)
-	{
-		steps = ((t_path *)path->content)->steps;
-		room = steps->content;
-		if (((t_room *)room->content)->end == 1)
-		{
-			((t_room *)room->content)->visited = false;
-			anthill->residual_capacity++;
-			return (1);
-		}
-		path = path->next;
-	}
-	return (0);
-}
-
-int				find_paths(t_anthill *anthill)
-{
-	int	max_flow;
-
-	max_flow = anthill->max_flow;
-	if (!init_paths(anthill))
-	return (0);
-	while (!end_found(anthill))
-	{
-		if (!(complete_paths(anthill)))
+	if (!(*queue = ft_lstnew(&new, sizeof(t_list))))
 		return (0);
+	(*queue)->content = (void *)start;
+	*head = *queue;
+	return (1);
+}
+
+static bool			bfs(t_anthill *anthill, t_list *start, t_list *end)
+{
+	t_list		*queue;
+	t_list		*head;
+	bool 			found_augmented_path;
+
+	found_augmented_path = false;
+	if (!init_queue(&queue, &head, start))
+		return (0);
+	while (queue)
+	{
+		if (!complete_queue(queue))
+			return (0);				// regarde les tunnels du top de la liste queue
+												// et les ajoute a la queue
+												// et set les previous
+												// et set les visited
+		if (((t_room *)end->content)->visited)
+		{
+			found_augmented_path = true;
+			break ;
+		}
+		queue = queue->next;
 	}
-	get_shortest_path(anthill);
+	ft_lstdel(&head, del_steps);
+	return (found_augmented_path);
+}
 
-	ft_putendl("ALL PATHS------------");
-	print_paths(anthill->paths);
-	ft_putendl("SHORTEST-------------");
-	print_paths(anthill->good_paths);
+static t_list			*get_tunnel(t_list *src, t_list *dest)
+{
+	t_list	*tunnel;
+	t_list	*room;
 
+	tunnel = ((t_room *)src->content)->tunnels;
+	while (tunnel)
+	{
+		room = tunnel->content;
+		if (room == dest)
+			return (tunnel);
+		tunnel = tunnel->next;
+	}
+	return (NULL);
+}
 
+static void set_usage(t_list *src, t_list *dest, bool is_previous)
+{
+	t_list	*tunnel;
+
+	tunnel = get_tunnel(src, dest);
+	if (((t_tunnel *)tunnel->content)->usage == 0 && is_previous)
+		((t_tunnel *)tunnel->content)->usage = -1;
+	else if (((t_tunnel *)tunnel->content)->usage == 0 && !is_previous)
+		((t_tunnel *)tunnel->content)->usage = 1;
+	else
+		((t_tunnel *)tunnel->content)->usage = 0;
+}
+
+static void 			set_tunnels_usage(t_list *end)
+{
+	t_list	*room;
+	t_list	*previous;
+
+	room = end;
+	while (room)
+	{
+		previous = ((t_room *)room->content)->previous;
+		if (previous)
+		{
+			set_usage(previous, room, true);
+			set_usage(room, previous, false);
+		}
+		room = ((t_room *)room->content)->previous;
+	}
+}
+
+static int				min_rounds(t_anthill, t_list *start, t_list *end)
+{
+	int		ret;
+
+	max_flow = 0;
+	path = NULL;
+	while (bfs(anthill, start, end))
+	{
+		set_tunnels_usage(end); // set a -1, 0 ou 1 les tunnels->usage de end a start en passant par les previous
+		ret = test_solution(start, anthill->ant_qty); //on teste le nb de lignes
+		if (ret >= anthill->rounds || ret == 0) // et on compare a la solution precedente
+			break ;
+		update_paths(start); // maj des pointeurs next et path_id
+		reset_rooms(anthill->rooms); //reset visited, previous et deviation
+		anthill->rounds = ret;
+	}
+	return (anthill->rounds != INT_MAX);
+}
+
+int						find_paths(t_anthill *anthill)
+{
+	if (!min_rounds(anthill, anthill->start, anthill->end))
+		return (0);
 	return (1);
 }

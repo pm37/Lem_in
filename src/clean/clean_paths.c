@@ -6,12 +6,12 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 19:04:27 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/06/11 15:02:32 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/06/12 23:48:06 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-
+/*
 static void	reset_rooms(t_list *room)
 {
 	while (room)
@@ -44,3 +44,4 @@ void		clean_paths(t_anthill *anthill)
 	reset_rooms(anthill->rooms);
 	block_entry(anthill->good_paths);
 }
+*/

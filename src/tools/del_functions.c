@@ -6,18 +6,18 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 19:12:54 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/06/04 19:13:23 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/06/12 23:48:22 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static void		del_steps(void *content, size_t size)
+void		del_steps(void *content, size_t size)
 {
 	if (content && size)
 		;
 }
-
+/*
 void			del_path(void *content, size_t size)
 {
 	t_path	*path;
@@ -28,4 +28,4 @@ void			del_path(void *content, size_t size)
 	if (content && size)
 		ft_lstdel(&steps, del_steps);
 }
-
+*/

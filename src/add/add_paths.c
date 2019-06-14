@@ -6,12 +6,12 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/31 15:15:45 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/06/10 17:30:54 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/06/13 00:25:03 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-
+/*
 static int		duplicate_path(t_anthill *anthill, t_list *target)
 {
 	t_list	*path;
@@ -30,8 +30,9 @@ static int		duplicate_path(t_anthill *anthill, t_list *target)
 	}
 	return (1);
 }
+*/
 
-int				add_step(t_anthill *anthill, t_list **steps, t_list *room)
+int				add_step(t_list **steps, t_list *room)
 {
 	t_list	*new_step;
 
@@ -39,12 +40,12 @@ int				add_step(t_anthill *anthill, t_list **steps, t_list *room)
 		return (0);
 	new_step->content = (void *)room;
 	((t_room *)room->content)->visited = true;
-	if (((t_room *)room->content)->end != 1)
-		anthill->visited++;
+//	if (((t_room *)room->content)->end != 1)
+//		anthill->visited++;
 	ft_lstprepend(steps, new_step);
 	return (1);
 }
-
+/*
 int				add_path(t_anthill *anthill, t_list *target, t_list *room)
 {
 
@@ -53,5 +54,19 @@ int				add_path(t_anthill *anthill, t_list *target, t_list *room)
 	((t_path *)anthill->paths->content)->steps->content = (void *)room;
 	((t_room *)room->content)->visited = true;
 	anthill->visited++;
+	return (1);
+}
+*/
+
+int				add_path(t_list **paths)
+{
+	t_path	path;
+	t_list	*new_path;
+
+	path.len = 0;
+	path.steps = NULL;
+	if (!(new_path = ft_lstnew(&path, sizeof(t_list))))
+		return (0);
+	ft_lstprepend(paths, new_path);
 	return (1);
 }
