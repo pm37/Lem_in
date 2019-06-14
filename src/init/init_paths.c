@@ -11,50 +11,42 @@
 /* ************************************************************************** */
 
 #include "lem_in.h"
-/*
-static int		init_path(t_anthill *anthill)
-{
-	t_list	*new_path;
-	t_list	*start;
-	t_path	origin;
 
-	origin.len = 1;
-	origin.deviation = false;
-	if (!(origin.steps = ft_lstnew(start, sizeof(t_list))))
+static int		init_path(t_list **paths, t_list *room)
+{
+  t_list      *new_path;
+	t_list	    *start;
+	t_path	    path;
+  static int  path_id = 0;
+
+	path.len = 1;
+	path.id = ++path_id;
+  path.sent = 0;
+  path.used = false;
+  path.room = NULL;
+	if (!(new_path = ft_lstnew(&path, sizeof(t_path))))
 		return (0);
-	origin.steps->content = (void *)anthill->start;
-	if (!(new_path = ft_lstnew(&origin, sizeof(t_path))))
-		return (0);
-	((t_room *)anthill->start->content)->visited = true;
-	ft_lstprepend(&anthill->paths, new_path);
+	((t_path *)new_path->content)->room = room;
+	ft_lstprepend(paths, new_path);
 	return (1);
 }
 
-int				init_paths(t_anthill *anthill)
+int				init_paths(t_list **paths, t_list *start)
 {
 	t_list	*new_step;
 	t_list	*room;
 	t_list	*tunnel;
 
-	room = anthill->start;
+	room = start;
 	tunnel = ((t_room *)(room->content))->tunnels;
 	while (tunnel)
 	{
-		room = tunnel->content;
-		if (((t_room *)room->content)->visited == false)
+		if (((t_tunnel *)tunnel->content)->usage == -1)
 		{
-			if (!init_path(anthill))
+			if (!init_path(paths, (t_tunnel *)tunnel->content)->room))
 				return (0);
-			room = tunnel->content;
-			((t_room *)room->content)->visited = true;
-			anthill->visited++;
-			if (!(new_step = ft_lstnew(new_step, sizeof(t_list))))
-				return (0);
-			new_step->content = (void *)room;
-			ft_lstprepend(&((t_path *)(anthill->paths->content))->steps, new_step);
 		}
 		tunnel = tunnel->next;
 	}
 	return (1);
 }
-*/

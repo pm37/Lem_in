@@ -57,7 +57,7 @@ int				add_path(t_anthill *anthill, t_list *target, t_list *room)
 	return (1);
 }
 */
-
+/*
 int				add_path(t_list **paths)
 {
 	t_path	path;
@@ -70,3 +70,10 @@ int				add_path(t_list **paths)
 	ft_lstprepend(paths, new_path);
 	return (1);
 }
+
+int 			complete_path(t_list **paths, t_list *room)
+{
+
+}
+
+*/

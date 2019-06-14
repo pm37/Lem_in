@@ -156,16 +156,80 @@ static void 			set_tunnels_usage(t_list *end)
 	}
 }
 
-static int				min_rounds(t_anthill, t_list *start, t_list *end)
+static void 				complete_path(t_list *path, t_list *room)
 {
-	int		ret;
+	t_list	*tunnel;
+	t_list	*next_room;
+
+	tunnel = ((t_room *)room->content)->tunnels;
+	while (tunnel)
+	{
+		if (((t_tunnel *)tunnel->content)->usage == -1)
+		{
+			path->len++;
+			next_room = ((t_tunnel *)tunnel->content)->room;
+			((t_room *)room->content)->new_next = next_room;
+			complete_path(path, ptr);
+			return ;
+		}
+		tunnel = tunnel->next;
+	}
+}
+
+static int 					sort_by_len(void *a, void *b)
+{
+	t_path 		*path1;
+	t_path 		*path2;
+
+	path1 = (t_path *)a;
+	path2 = (t_path *)b;
+	return (path1->len < path2->len);
+}
+
+static void 				complete_paths(t_list *path)
+{
+	t_list	*room;
+
+	while (path)
+	{
+		room = ((t_path *)path->content)->room;
+		complete_path(path, room);
+		path = path->next;
+	}
+	ft_lst_mergesort(&path, sort_by_len);
+}
+
+static void 			get_longest_path(&path, ant_qty)
+{
+
+}
+
+static int 				test_solution(t_list *paths, int ant_qty)
+{
+	t_list	*first_used_path;
+	int 		longest;
+
+	first_used_path = paths;
+	while (ant_qty > 0)
+	{
+		get_longest_path(&first_used_path, ant_qty);
+		ant_qty -= ft_lstcount(first_used_path);
+	}
+	//del_paths
+}
+
+static int				min_rounds(t_anthill *anthill, t_list *start, t_list *end)
+{
+	int			ret;
+	t_list	*paths;
 
 	max_flow = 0;
-	path = NULL;
 	while (bfs(anthill, start, end))
 	{
 		set_tunnels_usage(end); // set a -1, 0 ou 1 les tunnels->usage de end a start en passant par les previous
-		ret = test_solution(start, anthill->ant_qty); //on teste le nb de lignes
+		if (!init_paths(&paths, start) || !complete_paths(paths))
+			return (0);
+		ret = test_solution(paths, anthill->ant_qty); //on teste le nb de lignes
 		if (ret >= anthill->rounds || ret == 0) // et on compare a la solution precedente
 			break ;
 		update_paths(start); // maj des pointeurs next et path_id

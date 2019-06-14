@@ -19,12 +19,12 @@
 typedef struct			s_room
 {
 	char				*name;
-	int					path_id;
 	int					x;
 	int					y;
 	int					end;
 	bool				visited;
 	t_list			*next;
+	t_list			*new_next;
 	t_list			*previous;
 	t_list				*tunnels;
 }						t_room;
@@ -46,11 +46,20 @@ typedef struct			s_tunnel
 	t_list			*room;
 }				t_tunnel;
 
+typedef struct			s_path
+{
+	int 							id;
+	int 							sent;
+	int 							len;
+	bool 							used;
+	t_list						*room;
+}										t_path;
+
 int		create_anthill(t_anthill *anthill);
 int		find_paths(t_anthill *anthill);
 
 /*
-** ---------------------------- TOOLS ------------------------------
+** ---------------------------- TOOLS ------------------------------------------
 */
 int		ret_freetab(int ret, char **tab);
 int		ret_freeline(int ret, char **line);
@@ -61,23 +70,23 @@ int		copy_steps(void *dest, void *src);
 t_list	*compare_steps(t_list *l1, t_list *l2);
 void	del_path(void *content, size_t size);
 /*
-** ---------------------------- ADD --------------------------------
+** ------------------------------ ADD ------------------------------------------
 */
 int		add_room(t_anthill *anthill, char *line);
 int		add_tunnel(t_anthill *anthill, char *line);
 int		add_step(t_list **steps, t_list *room);
 int		add_path(t_list **paths);
 /*
-** ------------------------- DISPLAY -------------------------------
+** ---------------------------- DISPLAY ----------------------------------------
 */
 void	print_paths(t_list *paths);
 void	print_steps(t_list *steps);
 /*
-** -------------------------- INIT ---------------------------------
+** ----------------------------- INIT ------------------------------------------
 */
-int		init_paths(t_anthill *anthill);
+int		init_paths(t_list **paths, t_list *start);
 /*
-** -------------------------- CLEAN -----------------------------------
+** ----------------------------- CLEAN -----------------------------------------
 */
 void	clean_paths(t_anthill *anthill);
 int		check_dead_end(t_anthill *anthill);

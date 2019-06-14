@@ -82,6 +82,7 @@ static int		init_room(t_anthill *anthill, t_room *room, char **tab)
 	room->tunnels = NULL;
 	room->next = NULL;
 	room->previous = NULL;
+	room->new_next = NULL;
 	room->visited = false;
 	room->deviation = false;
 	(anthill->room_qty)++;
