@@ -15,14 +15,13 @@
 static int		init_path(t_list **paths, t_list *room)
 {
   t_list      *new_path;
-	t_list	    *start;
 	t_path	    path;
   static int  path_id = 0;
 
 	path.len = 1;
 	path.id = ++path_id;
   path.sent = 0;
-  path.used = false;
+  path.used = true;
   path.room = NULL;
 	if (!(new_path = ft_lstnew(&path, sizeof(t_path))))
 		return (0);
@@ -33,7 +32,6 @@ static int		init_path(t_list **paths, t_list *room)
 
 int				init_paths(t_list **paths, t_list *start)
 {
-	t_list	*new_step;
 	t_list	*room;
 	t_list	*tunnel;
 
@@ -43,7 +41,7 @@ int				init_paths(t_list **paths, t_list *start)
 	{
 		if (((t_tunnel *)tunnel->content)->usage == -1)
 		{
-			if (!init_path(paths, (t_tunnel *)tunnel->content)->room))
+			if (!init_path(paths, ((t_tunnel *)tunnel->content)->room))
 				return (0);
 		}
 		tunnel = tunnel->next;

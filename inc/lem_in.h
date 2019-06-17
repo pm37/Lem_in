@@ -22,6 +22,9 @@ typedef struct			s_room
 	int					x;
 	int					y;
 	int					end;
+	int 				path_id;
+	int 				new_path_id;
+	bool 				deviation;
 	bool				visited;
 	t_list			*next;
 	t_list			*new_next;
@@ -35,6 +38,7 @@ typedef struct			s_anthill
 	int					room_qty;
 	int 			rounds;
 	int 			id;
+	int 			max_flow;
 	t_list				*rooms;
 	t_list				*start;
 	t_list				*end;
@@ -91,7 +95,6 @@ int		init_paths(t_list **paths, t_list *start);
 void	clean_paths(t_anthill *anthill);
 int		check_dead_end(t_anthill *anthill);
 void 	del_steps(void *content, size_t size);
-}
 
 
 #endif

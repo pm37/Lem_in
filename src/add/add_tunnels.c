@@ -6,7 +6,7 @@
 /*   By: pimichau <pimichau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/18 12:20:27 by pimichau          #+#    #+#             */
-/*   Updated: 2019/06/12 23:46:54 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/06/17 15:30:48 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,19 +49,19 @@ static int	rooms_exist(t_list *head, t_list **room1,
 
 static int	create_tunnel(t_list *room1, t_list *room2)
 {
-	t_list		*new_tunnel;
-	t_tunnel	tunnel;
+	t_list		*tunnel;
+	t_tunnel	new;
 	t_room		*origin;
 
 	origin = (t_room *)(room1->content);
-	tunnel.capacity = 1;
-	tunnel.room = NULL;
+	new.usage = 0;
+	new.room = NULL;
 	if (tunnel_exists(origin->tunnels, room2))
 		return (0);
-	if (!(new_tunnel = ft_lstnew(&tunnel, sizeof(t_list))))
+	if (!(tunnel = ft_lstnew(&new, sizeof(t_tunnel))))
 		return (0);
-	((t_tunnel *)new_tunnel->content)->room = room2;
-	ft_lstappend(&origin->tunnels, new_tunnel);
+	((t_tunnel *)tunnel->content)->room = room2;
+	ft_lstappend(&origin->tunnels, tunnel);
 	return (1);
 }
 

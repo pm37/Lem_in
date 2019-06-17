@@ -6,42 +6,33 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/31 13:49:27 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/06/12 23:47:53 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/06/17 15:49:26 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-/*
-void			print_steps(t_list *steps)
-{
-	t_list	*step;
-	t_list	*room;
 
-	step = steps;
-	while (step)
+void		print_path(t_list *room)
+{
+	ft_printf("PATH ID: %d\n", ((t_room *)room->content)->path_id);
+	while (room)
 	{
-		room = step->content;
 		ft_printf("%s%c"
-		, ((t_room *)(room->content))->name
-		, step->next ? '-' : '\n');
-		step = step->next;
+		, ((t_room *)room->content)->name
+		, ((t_room *)room->content)->next ? '-' : '\n');
+		room = ((t_room *)room->content)->next;
 	}
 }
 
-void			print_paths(t_list *paths)
+void		print_paths(t_list *start)
 {
-	t_list	*path;
-	t_list	*steps;
-	int		i;
+	t_list	*tunnel;
 
-	path = paths;
-	i = 0;
-	while (path && ++i)
+	tunnel = ((t_room *)start->content)->tunnels;
+	while (tunnel)
 	{
-	//	ft_printf("ID: %d, len = %d\n", i, ((t_path *)path->content)->len);
-		steps = ((t_path *)(path->content))->steps;
-		print_steps(steps);
-		path = path->next;	
+		if (((t_tunnel *)tunnel->content)->usage == -1)
+			print_path(((t_tunnel *)tunnel->content)->room);
+		tunnel = tunnel->next;
 	}
 }
-*/

@@ -85,6 +85,8 @@ static int		init_room(t_anthill *anthill, t_room *room, char **tab)
 	room->new_next = NULL;
 	room->visited = false;
 	room->deviation = false;
+	room->path_id = 0;
+	room->new_path_id = 0;
 	(anthill->room_qty)++;
 	return (1);
 }
