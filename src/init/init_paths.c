@@ -23,6 +23,7 @@ static int		init_path(t_list **paths, t_list *room)
   path.sent = 0;
   path.used = true;
   path.room = NULL;
+  path.complete = false;
 	if (!(new_path = ft_lstnew(&path, sizeof(t_path))))
 		return (0);
 	((t_path *)new_path->content)->room = room;
@@ -46,5 +47,6 @@ int				init_paths(t_list **paths, t_list *start)
 		}
 		tunnel = tunnel->next;
 	}
+  ft_printf("initialized %d paths\n", ft_lstcount(*paths));
 	return (1);
 }

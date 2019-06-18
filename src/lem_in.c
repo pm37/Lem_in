@@ -41,8 +41,8 @@ int				main(void)
 		room = ((t_tunnel *)tunnel->content)->room;
 		ft_printf("usage = %d, name = %s\n"
 		, ((t_tunnel *)tunnel->content)->usage
-		, ((t_room *)room->content)->name); 
-		tunnel = tunnel->next;	
+		, ((t_room *)room->content)->name);
+		tunnel = tunnel->next;
 	}*/
 	if (!(find_paths(&anthill)))
 		return (0);

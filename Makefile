@@ -33,9 +33,9 @@ DEBUG = $(CC) -g
 MKDIR = mkdir -p
 CLEANUP = rm -rf
 
-WFLAGS += -Wall
-WFLAGS += -Werror
-WFLAGS += -Wextra
+#WFLAGS += -Wall
+#WFLAGS += -Werror
+#WFLAGS += -Wextra
 DFLAGS = -fsanitize=address
 IFLAGS = -I $(IPATH) -I $(LIPATH)
 CFLAGS = $(WFLAGS) $(IFLAGS)

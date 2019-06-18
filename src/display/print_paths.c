@@ -14,13 +14,13 @@
 
 void		print_path(t_list *room)
 {
-	ft_printf("PATH ID: %d\n", ((t_room *)room->content)->path_id);
+	ft_printf("PATH ID: %d\n", ((t_room *)room->content)->new_path_id);
 	while (room)
 	{
 		ft_printf("%s%c"
 		, ((t_room *)room->content)->name
-		, ((t_room *)room->content)->next ? '-' : '\n');
-		room = ((t_room *)room->content)->next;
+		, ((t_room *)room->content)->new_next ? '-' : '\n');
+		room = ((t_room *)room->content)->new_next;
 	}
 }
 
@@ -34,5 +34,17 @@ void		print_paths(t_list *start)
 		if (((t_tunnel *)tunnel->content)->usage == -1)
 			print_path(((t_tunnel *)tunnel->content)->room);
 		tunnel = tunnel->next;
+	}
+}
+
+void print_steps(t_list *room)
+{
+	ft_printf("Path id %d\n", ((t_room *)room->content)->path_id);
+	while (room)
+	{
+		ft_printf("%s%c"
+		, ((t_room *)room->content)->name
+		, ((t_room *)room->content)->new_next ? '-' : '\n');
+		room = ((t_room *)room->content)->new_next;
 	}
 }
