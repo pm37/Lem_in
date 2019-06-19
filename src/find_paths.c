@@ -6,7 +6,7 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/31 12:46:19 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/06/18 14:05:38 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/06/19 20:01:32 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <limits.h>
 
 static void 		reset_visited_rooms(t_list *dev_room
-								, t_list *prev_room, t_list *queue, t_list *end)
+			, t_list *prev_room, t_list *queue, t_list *end)
 {
 	t_list	*room;
 
@@ -73,7 +73,7 @@ static bool 			deviation_reaches_end(t_list *deviation_room, t_list *end)
 	return (ret);
 }
 
-static int 			check_tunnel(t_list *current, t_list *tunnel, t_list *end)
+static bool 			tunnel_is_usable(t_list *current, t_list *tunnel, t_list *end)
 {
 	t_list		*room;
 	t_room		*dest;
@@ -88,12 +88,10 @@ static int 			check_tunnel(t_list *current, t_list *tunnel, t_list *end)
 	&& !dest->visited && dest->path_id != 0 && going_to_deviate(current, room))
 	{
 	//	ft_printf("curr vers dev = %s\n", ((t_room *)current->content)->name);
-		return (!deviation_reaches_end(room, end));
+		return (deviation_reaches_end(room, end));
 	}
-	return (dest->visited == true
-	|| usage == -1
-	|| dest->end == 0
-	|| (src->deviation && usage == 0));
+	return (!dest->visited && usage != -1 && dest->end != 0
+	&& !(src->deviation && usage == 0));
 }
 
 int 			going_to_deviate(t_list *current, t_list *room)
@@ -153,7 +151,7 @@ static int 			complete_queue(t_list *queue, t_list *end)
 	while (tunnel)
 	{
 		room = ((t_tunnel *)tunnel->content)->room;
-		if (check_tunnel(current, tunnel, end))
+		if (!tunnel_is_usable(current, tunnel, end))
 		{
 			tunnel = tunnel->next;
 			continue ;
@@ -162,6 +160,8 @@ static int 			complete_queue(t_list *queue, t_list *end)
 			return (0);
 		((t_room *)room->content)->previous = current;
 		((t_room *)room->content)->visited = true;
+		if (((t_room *)room->content)->end == 1)
+			return (1);
 		if (going_to_deviate(current, room))
 			((t_room *)room->content)->deviation = true;
 		tunnel = tunnel->next;
@@ -180,7 +180,7 @@ static int			init_queue(t_list **queue, t_list *start)
 	(*queue)->content = (void *)start;
 	return (1);
 }
-
+/*
 static void 	print_queue(t_list *queue)
 {
 	t_list	*room;
@@ -191,15 +191,15 @@ static void 	print_queue(t_list *queue)
 		queue = queue->next;
 	}
 }
-
+*/
 bool			bfs(t_list *start, t_list *end, t_list **queue)
 {
 	t_list		*head;
 	t_list		*room;
 	bool 			found_augmented_path;
-	static int i = 0;
+//	static int i = 0;
 
-	ft_printf("bfs # %d\n", ++i);
+//	ft_printf("bfs # %d\n", ++i);
 	found_augmented_path = false;
 	if (!init_queue(queue, start))
 		return (false);
@@ -212,16 +212,16 @@ bool			bfs(t_list *start, t_list *end, t_list **queue)
 	//	(((t_room *)room->content)->name));
 		if (!complete_queue(*queue, end))
 			return (false);
-		print_queue(*queue);
 		if (((t_room *)end->content)->visited)
 		{
 			found_augmented_path = true;
 			break ;
 		}
+	//	print_queue(*queue);
 		*queue = (*queue)->next;
 	}
 	*queue = head;
-	//ft_lstdel(&head, del_steps);
+//	ft_lstdel(&head, del_steps);
 //	ft_printf("return %d\n", found_augmented_path == true);
 	return (found_augmented_path);
 }
@@ -261,10 +261,12 @@ static void 			set_tunnels_usage(t_list *end)
 	t_list	*room;
 	t_list	*previous;
 
-	room = end;
+	room = end; 
 	while (room)
 	{
 		previous = ((t_room *)room->content)->previous;
+	//	if (previous && ((t_room *)previous->content)->end == 1)
+	//		break ;
 		if (previous)
 		{
 			set_usage(previous, room, true);
@@ -379,7 +381,7 @@ static int 				test_solution(t_list *paths, int ant_qty)
 		//ft_putendl("out");
 		//ft_printf("lst count = %d\n", ft_lstcount(used_path));
 		ant_qty -= ft_lstcount(used_path);
-	//	ft_printf("nb of paths used = %d, ant_qty = %d\n", ft_lstcount(used_path), ant_qty);
+		ft_printf("nb of paths used = %d, ant_qty = %d\n", ft_lstcount(used_path), ant_qty);
 		rounds++;
 	}
 	rounds += ((t_path *)used_path->content)->len - 1;
@@ -440,6 +442,7 @@ static void			print_usage(t_list *room)
 			, ((t_tunnel *)tunnel->content)->usage);
 			tunnel = tunnel->next;
 		}
+
 		room = room->next;
 	}
 }

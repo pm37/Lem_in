@@ -6,16 +6,18 @@
 #    By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/07 17:52:27 by bwan-nan          #+#    #+#              #
-#    Updated: 2019/06/04 18:02:19 by bwan-nan         ###   ########.fr        #
+#    Updated: 2019/06/19 16:28:46 by bwan-nan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
+DBNAME = libftdb.a
 
 CC = Clang
 CFLAGS = -Wall -Werror -Wextra
 IFLAGS = -I $(IPATH)
 COMPILE = $(CC) -c
+DEBUG = $(CC) -g -c
 MKDIR = mkdir -p
 CLEANUP = /bin/rm -rf
 
@@ -180,19 +182,27 @@ IPATH = inc/
 OPATH = obj/
 
 OBJS = $(patsubst %.c, $(OPATH)%.o, $(SRC))
+OBJD = $(patsubst %.c, $(OPATH)db%.o, $(SRC))
+
+DSYM += $(NAME).dSYM
+DSYM += $(DBNAME).dSYM
 
 all: $(OPATH) $(NAME)
 
-$(EXEC): $(NAME) $(SRCM)
-	$(CC) $^ -I $(IPATH) -o $@
+debug : $(OPATH) $(DBNAME)
 
-run: $(OPATH) $(EXEC)
-	./$(EXEC)
+$(DBNAME): $(OBJD)
+	ar -rusc $@ $^
+	printf "$(GREEN)$@ is ready.\n$(NC)"
 
 $(NAME): $(OBJS)
 	ar -rusc $@ $^
 	ranlib $@
 	printf "$(GREEN)$@ is ready.\n$(NC)"
+
+$(OBJD): $(OPATH)db%.o : %.c $(INC)
+	$(DEBUG) $(CFLAGS) $(IFLAGS) $< -o $@
+	printf "$(BLUE)Compiling $< for debug\n$(NC)"
 
 $(OBJS): $(OPATH)%.o : %.c $(INC)
 	$(COMPILE) $(CFLAGS) $(IFLAGS) $< -o $@
@@ -201,13 +211,18 @@ $(OBJS): $(OPATH)%.o : %.c $(INC)
 $(OPATH):
 	$(MKDIR) $@
 
+cleandb:
+	$(CLEANUP) $(DBNAME)
+	printf "$(RED)$(DBNAME) deleted\n$(NC)"
+
 clean:
 	$(CLEANUP) $(OBJS)
 	$(CLEANUP) $(OPATH)
 	$(CLEANUP) $(EXEC)
+	$(CLEANUP) $(DSYM)
 	#printf "$(RED)All objects removed from Libft\n$(NC)"
 
-fclean: clean
+fclean: clean cleandb
 	$(CLEANUP) $(NAME)
 	printf "$(RED)$(NAME) deleted\n$(NC)"
 

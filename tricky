@@ -1,4 +1,4 @@
-10
+6
 ##start
 Start 0 0
 A 1 1
@@ -14,16 +14,14 @@ H 9 9
 X 10 10
 Q 11 11
 Start-A
+Start-F
 A-B
 B-C
-C-End
-Start-F
-F-U
-U-B
-T-B
-T-C
-T-U
 B-G
+C-End
+F-U
+U-T
+T-C
 G-H
 H-X
 X-Q

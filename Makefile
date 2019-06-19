@@ -6,12 +6,13 @@
 #    By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/21 16:04:21 by bwan-nan          #+#    #+#              #
-#    Updated: 2019/06/11 14:08:51 by bwan-nan         ###   ########.fr        #
+#    Updated: 2019/06/19 16:34:36 by bwan-nan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = lem_in
 LIB = $(LPATH)libft.a
+LIBDB = $(LPATH)libftdb.a
 
 # Reset
 NC=\033[0m
@@ -33,9 +34,9 @@ DEBUG = $(CC) -g
 MKDIR = mkdir -p
 CLEANUP = rm -rf
 
-#WFLAGS += -Wall
-#WFLAGS += -Werror
-#WFLAGS += -Wextra
+WFLAGS += -Wall
+WFLAGS += -Werror
+WFLAGS += -Wextra
 DFLAGS = -fsanitize=address
 IFLAGS = -I $(IPATH) -I $(LIPATH)
 CFLAGS = $(WFLAGS) $(IFLAGS)
@@ -68,7 +69,7 @@ SRC += init_paths.c
 SRC += add_paths.c
 
 
-DSYMC = $(NAME).dSYM
+DSYM = $(NAME).dSYM
 
 OBJ = $(patsubst %.c, $(OPATH)%.o, $(SRC))
 
@@ -82,6 +83,10 @@ vpath	%.h inc/
 vpath	%.h libft/inc/
 
 all : $(LIB) $(NAME)
+
+debug : $(LIBDB) $(SRC)
+	$(MAKE) -C $(LPATH) debug
+	$(DEBUG) $(DFLAGS) $(CFLAGS) -o $(NAME) $^
 
 $(NAME): $(LIB) $(OPATH) $(OBJ) $(INCS)
 	$(CC) -o $@ $< $(OBJ)
