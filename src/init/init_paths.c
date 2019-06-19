@@ -47,6 +47,8 @@ int				init_paths(t_list **paths, t_list *start)
 		}
 		tunnel = tunnel->next;
 	}
-  ft_printf("initialized %d paths\n", ft_lstcount(*paths));
+  ft_printf("initialized %d path%s"
+  , ft_lstcount(*paths)
+  , ft_lstcount(*paths) > 1 ? "s\n" : "\n");
 	return (1);
 }

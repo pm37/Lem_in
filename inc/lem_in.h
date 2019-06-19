@@ -26,6 +26,7 @@ typedef struct			s_room
 	int 				new_path_id;
 	bool 				deviation;
 	bool				visited;
+	bool 				dead_end;
 	t_list			*next;
 	t_list			*new_next;
 	t_list			*previous;

@@ -59,11 +59,14 @@ static bool 			deviation_reaches_end(t_list *deviation_room, t_list *end)
 	if (((t_room *)prev_room->content)->end == 0)
 		return (false);
 	ret = false;
-	if (((t_room *)prev_room->content)->visited == false)
+	if (((t_room *)prev_room->content)->visited == false
+	&& ((t_room *)deviation_room->content)->dead_end == false)
 	{
 		((t_room *)deviation_room->content)->visited = true;
 		((t_room *)prev_room->content)->visited = true;
 		ret = bfs(prev_room, end, &queue);
+		if (!ret)
+			((t_room *)deviation_room->content)->dead_end = true;
 		reset_visited_rooms(deviation_room, prev_room, queue, end);
 		ft_lstdel(&queue, del_steps);
 	}
@@ -194,7 +197,9 @@ bool			bfs(t_list *start, t_list *end, t_list **queue)
 	t_list		*head;
 	t_list		*room;
 	bool 			found_augmented_path;
+	static int i = 0;
 
+	ft_printf("bfs # %d\n", ++i);
 	found_augmented_path = false;
 	if (!init_queue(queue, start))
 		return (false);
@@ -304,17 +309,18 @@ static int 					sort_by_len(void *a, void *b)
 	return (path1->len < path2->len);
 }
 
-static void				complete_paths(t_list *path)
+static void				complete_paths(t_list **path)
 {
 	t_list	*room;
+	t_list 	*elem;
 	//t_list	*head;
 
-	//head = path;
-	while (path)
+	elem = *path;
+	while (elem)
 	{
-		room = ((t_path *)path->content)->room;
-		complete_path(path, room);
-		path = path->next;
+		room = ((t_path *)elem->content)->room;
+		complete_path(elem, room);
+		elem = elem->next;
 	}
 	/*path = head;
 	while (path)
@@ -327,7 +333,8 @@ static void				complete_paths(t_list *path)
 			ft_putendl("true");
 		path = path->next;
 	}*/
-	ft_lst_mergesort(&path, sort_by_len);
+	ft_lst_mergesort(path, sort_by_len);
+	elem = *path;
 }
 
 static t_list 		*get_longest_path(t_list *path, int ant_qty)
@@ -336,17 +343,21 @@ static t_list 		*get_longest_path(t_list *path, int ant_qty)
 	int 		ant_qty_out;
 	int 		path_len;
 
-	if (!path)
-		return (NULL);
+	if (!path->next)
+		return (path);
 	head = path;
 	path_len = ((t_path *)path->content)->len;
 	ant_qty_out = 0;
 	path = path->next;
 	while (path)
 	{
+	/*	ft_printf("longest_len = %d, path->content->len = %d\n"
+		, path_len
+		, ((t_path *)path->content)->len);*/
 		ant_qty_out += path_len - ((t_path *)path->content)->len + 1;
 		path = path->next;
 	}
+//	ft_printf("ant_qty_out = %d, ant_qty = %d\n", ant_qty_out, ant_qty);
 	if (ant_qty_out < ant_qty)
 		return (head);
 	return (get_longest_path(head->next, ant_qty));
@@ -362,14 +373,16 @@ static int 				test_solution(t_list *paths, int ant_qty)
 	while (ant_qty > 0)
 	{
 		//ft_printf("entry with %d ants left\n", ant_qty);
-		if (!(used_path = get_longest_path(used_path, ant_qty)))
-			return (0);
-		//	ft_printf("used_path id = %d\n", ((t_path *)used_path->content)->id);
-	//	ft_putendl("out");
-	//	ft_printf("lst count = %d\n", ft_lstcount(used_path));
+		used_path = get_longest_path(used_path, ant_qty);
+		//ft_printf("used_path id = %d\n", ((t_path *)used_path->content)->id);
+		//ft_printf("used_path id = %d\n", ((t_path *)used_path->content)->id);
+		//ft_putendl("out");
+		//ft_printf("lst count = %d\n", ft_lstcount(used_path));
 		ant_qty -= ft_lstcount(used_path);
+	//	ft_printf("nb of paths used = %d, ant_qty = %d\n", ft_lstcount(used_path), ant_qty);
 		rounds++;
 	}
+	rounds += ((t_path *)used_path->content)->len - 1;
 	//del_paths ?
 	return (rounds);
 }
@@ -383,6 +396,7 @@ static void update_rooms(t_list *room)
 		((t_room *)room->content)->previous = NULL;
 		((t_room *)room->content)->visited = false;
 		((t_room *)room->content)->deviation = false;
+		((t_room *)room->content)->dead_end = false;
 		((t_room *)room->content)->new_next = NULL;
 		((t_room *)room->content)->new_path_id = 0;
 		room = room->next;
@@ -447,13 +461,13 @@ static int				min_rounds(t_anthill *anthill, t_list *start, t_list *end)
 		if (!init_paths(&paths, start))
 			return (0);
 	//	ft_putendl("paths init");
-		complete_paths(paths);
+		complete_paths(&paths);
 	//	ft_putendl("paths completed");
-	print_paths(anthill->start);
+	//print_paths(anthill->start);
 		ret = test_solution(paths, anthill->ant_qty); //on teste le nb de lignes
 		ft_printf("solution tested: %d rounds\n", ret);
-//		if (ret >= anthill->rounds || ret == 0) // et on compare a la solution precedente
-	//		break ;
+		if (ret > anthill->rounds || ret == 0) // et on compare a la solution precedente
+			break ;
 		update_rooms(anthill->rooms); // maj des pointeurs next et path_id
 		//reset_rooms(anthill->rooms); //reset visited, previous et deviation
 		anthill->rounds = ret;
@@ -469,5 +483,6 @@ int						find_paths(t_anthill *anthill)
 {
 	if (!min_rounds(anthill, anthill->start, anthill->end))
 		return (0);
+	print_paths(anthill->start);
 	return (1);
 }
