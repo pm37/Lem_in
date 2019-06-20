@@ -6,7 +6,7 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/31 12:46:19 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/06/19 20:01:32 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/06/20 16:29:32 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -386,7 +386,7 @@ static int				min_rounds(t_anthill *anthill, t_list *start
 			return (0);
 		complete_paths(paths);
 		ret = test_solution(*paths, anthill->ant_qty); //on teste le nb de lignes
-		ft_printf("solution tested: %d rounds\n", ret);
+	//	ft_printf("solution tested: %d rounds\n", ret);
 		if (ret > anthill->rounds || ret == 0) // et on compare a la solution precedente
 		{
 			ft_lstdel(paths, del_steps);
