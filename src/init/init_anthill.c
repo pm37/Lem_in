@@ -46,33 +46,6 @@ static int		end_of_rooms(char *line)
 	return (0);
 }
 
-static int		get_min(int a, int b, int c)
-{
-	int	min;
-
-	if (a < b)
-	{
-		min = a;
-		if (c < a)
-			min = c;
-	}
-	else
-	{
-		min = b;
-		if (c < b)
-			min = c;
-	}
-	return (min);
-}
-
-static int		count_links(t_list *room)
-{
-	t_list	*tunnels;
-
-	tunnels = ((t_room *)room->content)->tunnels;
-	return (ft_lstcount(tunnels));
-}
-
 int				create_anthill(t_anthill *anthill)
 {
 	char	*line;
@@ -95,7 +68,5 @@ int				create_anthill(t_anthill *anthill)
 			return (ret_freeline(0, &line));
 		ft_strdel(&line);
 	}
-	anthill->max_flow = get_min(anthill->ant_qty
-	, count_links(anthill->start), count_links(anthill->end));
 	return (1);
 }

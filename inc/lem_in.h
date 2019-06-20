@@ -23,6 +23,8 @@ typedef struct			s_room
 	int					y;
 	int					end;
 	int 				path_id;
+	int 				ant_id;
+	int 				population;
 	int 				new_path_id;
 	bool 				deviation;
 	bool				visited;
@@ -30,16 +32,15 @@ typedef struct			s_room
 	t_list			*next;
 	t_list			*new_next;
 	t_list			*previous;
-	t_list				*tunnels;
+	t_list			*tunnels;
 }						t_room;
 
 typedef struct			s_anthill
 {
 	int				ant_qty;
-	int					room_qty;
+	int				room_qty;
 	int 			rounds;
 	int 			id;
-	int 			max_flow;
 	t_list				*rooms;
 	t_list				*start;
 	t_list				*end;
@@ -56,13 +57,12 @@ typedef struct			s_path
 	int 							id;
 	int 							sent;
 	int 							len;
-	bool 							used;
 	bool 							complete;
 	t_list						*room;
 }										t_path;
 
 int		create_anthill(t_anthill *anthill);
-int		find_paths(t_anthill *anthill);
+int		find_paths(t_anthill *anthill, t_list **paths);
 bool	bfs(t_list *start, t_list *end, t_list **queue);
 int 	going_to_deviate(t_list *current, t_list *room);
 

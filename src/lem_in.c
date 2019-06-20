@@ -27,24 +27,14 @@ static void		init_anthill(t_anthill *anthill)
 int				main(void)
 {
 	t_anthill	anthill;
-//	t_list		*start;
-//	t_list		*tunnel;
-//	t_list		*room;
+	t_list		*paths;
 
+	paths = NULL;
 	init_anthill(&anthill);
 	if (!create_anthill(&anthill))
 		return (ret_print(0, "ERROR")); // free everything
-/*	start = anthill.start;
-	tunnel = ((t_room *)start->content)->tunnels;
-	while (tunnel)
-	{
-		room = ((t_tunnel *)tunnel->content)->room;
-		ft_printf("usage = %d, name = %s\n"
-		, ((t_tunnel *)tunnel->content)->usage
-		, ((t_room *)room->content)->name);
-		tunnel = tunnel->next;
-	}*/
-	if (!(find_paths(&anthill)))
+	if (!(find_paths(&anthill, &paths)))
 		return (0);
+	print_paths(paths);
 	return (0);
 }

@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "lem_in.h"
-
+/*
 void		print_path(t_list *room)
 {
 	ft_printf("PATH ID: %d\n", ((t_room *)room->content)->path_id);
@@ -23,23 +23,7 @@ void		print_path(t_list *room)
 		room = ((t_room *)room->content)->next;
 	}
 }
-
-void		print_paths(t_list *start)
-{
-	t_list	*tunnel;
-	t_list	*next_room;
-
-	tunnel = ((t_room *)start->content)->tunnels;
-	while (tunnel)
-	{
-		next_room = ((t_tunnel *)tunnel->content)->room;
-		if (((t_tunnel *)tunnel->content)->usage == -1
-		&& ((t_room *)next_room->content)->next)
-			print_path(((t_tunnel *)tunnel->content)->room);
-		tunnel = tunnel->next;
-	}
-}
-
+*/
 void print_steps(t_list *room)
 {
 	ft_printf("Path id %d\n", ((t_room *)room->content)->path_id);
@@ -49,5 +33,18 @@ void print_steps(t_list *room)
 		, ((t_room *)room->content)->name
 		, ((t_room *)room->content)->next ? '-' : '\n');
 		room = ((t_room *)room->content)->next;
+	}
+}
+
+void		print_paths(t_list *path)
+{
+	t_list	*room;
+
+	while (path)
+	{
+		room = ((t_path *)path->content)->room;
+		ft_printf("sent = %d\n", ((t_path *)path->content)->sent);
+		print_steps(room);
+		path = path->next;
 	}
 }

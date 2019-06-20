@@ -21,7 +21,6 @@ static int		init_path(t_list **paths, t_list *room)
 	path.len = 1;
 	path.id = ++path_id;
   path.sent = 0;
-  path.used = true;
   path.room = NULL;
   path.complete = false;
 	if (!(new_path = ft_lstnew(&path, sizeof(t_path))))
