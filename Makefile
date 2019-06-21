@@ -6,7 +6,7 @@
 #    By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/21 16:04:21 by bwan-nan          #+#    #+#              #
-#    Updated: 2019/06/19 16:34:36 by bwan-nan         ###   ########.fr        #
+#    Updated: 2019/06/21 15:01:24 by bwan-nan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,6 +69,11 @@ SRC += init_paths.c
 SRC += add_paths.c
 SRC += init_ants.c
 SRC += add_ants.c
+SRC += update_queue.c
+SRC += deviation.c
+SRC += complete_paths.c
+SRC += update_tunnels.c
+SRC += test_solution.c
 SRC += print_output.c
 
 
@@ -82,6 +87,7 @@ vpath	%.c src/add/
 vpath	%.c src/clean/
 vpath	%.c src/display/
 vpath	%.c src/init/
+vpath	%.c src/algo/
 vpath	%.h inc/
 vpath	%.h libft/inc/
 

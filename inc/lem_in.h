@@ -6,7 +6,7 @@
 /*   By: pimichau <pimichau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/14 16:14:17 by pimichau          #+#    #+#             */
-/*   Updated: 2019/06/21 12:19:50 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/06/21 14:38:21 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ int		create_anthill(t_anthill *anthill);
 bool	find_paths(t_anthill *anthill, t_list *start
 		, t_list *end, t_list **paths);
 bool	bfs(t_list *start, t_list *end, t_list **queue);
-int 	going_to_deviate(t_list *current, t_list *room);
 
 /*
 ** ---------------------------- TOOLS ------------------------------------------
@@ -111,5 +110,14 @@ void	clean_paths(t_anthill *anthill);
 int		check_dead_end(t_anthill *anthill);
 void 	del_steps(void *content, size_t size);
 
+
+int	test_solution(t_list *paths, int ant_qty);
+void	update_data(t_anthill *anthill, int rounds);
+void	complete_paths(t_list **paths);
+void	set_tunnels_usage(t_list *end);
+int	init_queue(t_list **queue, t_list *start);
+int	complete_queue(t_list *queue, t_list *end);
+bool	going_to_deviate(t_list *current, t_list *room);
+bool	deviation_reaches_end(t_list *deviation_room, t_list *end);
 
 #endif
