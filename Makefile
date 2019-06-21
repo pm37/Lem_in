@@ -69,7 +69,7 @@ SRC += init_paths.c
 SRC += add_paths.c
 SRC += init_ants.c
 SRC += add_ants.c
-SRC += print_output.c
+SRC += print_solution.c
 
 
 DSYM = $(NAME).dSYM

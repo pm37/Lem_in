@@ -36,6 +36,7 @@ int				main(void)
 		return (0);
 	//print_paths(paths);
 	ft_lstrev(&paths);
+	//print_paths(paths);
 	init_ants(&anthill);
 	print_output(&anthill, paths);
 	ft_putnbrendl(anthill.rounds);

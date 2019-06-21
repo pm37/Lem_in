@@ -4,6 +4,7 @@ int		init_ants(t_anthill *anthill)
 {
 	int		i;
 
+	anthill->ants = NULL;
 	i = anthill->ant_qty + 1;
 	while (--i)
 	{
