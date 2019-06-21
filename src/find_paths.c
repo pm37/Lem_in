@@ -6,7 +6,7 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/31 12:46:19 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/06/20 16:29:32 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/06/21 12:20:39 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -368,7 +368,7 @@ static void update_data(t_anthill *anthill, int rounds)
 	anthill->rounds = rounds;
 }
 
-static int				min_rounds(t_anthill *anthill, t_list *start
+bool				find_paths(t_anthill *anthill, t_list *start
 									, t_list *end, t_list **paths)
 {
 	int			ret;
@@ -383,7 +383,7 @@ static int				min_rounds(t_anthill *anthill, t_list *start
 		ft_lstdel(&queue, del_steps);
 		set_tunnels_usage(end); // set a -1, 0 ou 1 les tunnels->usage de end a start en passant par les previous
 		if (!init_paths(paths, start))
-			return (0);
+			return (false);
 		complete_paths(paths);
 		ret = test_solution(*paths, anthill->ant_qty); //on teste le nb de lignes
 	//	ft_printf("solution tested: %d rounds\n", ret);
@@ -397,11 +397,4 @@ static int				min_rounds(t_anthill *anthill, t_list *start
 		ft_lstdel(&previous_paths, del_steps);
 	}
 	return (anthill->rounds != INT_MAX);
-}
-
-int						find_paths(t_anthill *anthill, t_list **paths)
-{
-	if (!min_rounds(anthill, anthill->start, anthill->end, paths))
-		return (0);
-	return (1);
 }
