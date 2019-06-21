@@ -44,6 +44,7 @@ typedef struct			s_anthill
 	t_list				*rooms;
 	t_list				*start;
 	t_list				*end;
+	t_list				*ants;
 }						t_anthill;
 
 typedef struct			s_tunnel
@@ -60,6 +61,12 @@ typedef struct			s_path
 	bool 							complete;
 	t_list						*room;
 }										t_path;
+
+typedef struct 			s_ant
+{
+	int 							id;
+	t_room 						*position;
+} 									t_ant;
 
 int		create_anthill(t_anthill *anthill);
 int		find_paths(t_anthill *anthill, t_list **paths);
@@ -84,15 +91,18 @@ int		add_room(t_anthill *anthill, char *line);
 int		add_tunnel(t_anthill *anthill, char *line);
 int		add_step(t_list **steps, t_list *room);
 int		add_path(t_list **paths);
+int		add_ant(int id, t_anthill *anthill);
 /*
 ** ---------------------------- DISPLAY ----------------------------------------
 */
 void	print_paths(t_list *paths);
 void	print_steps(t_list *steps);
+void    print_output(t_anthill *anthill, t_list *paths);
 /*
 ** ----------------------------- INIT ------------------------------------------
 */
 int		init_paths(t_list **paths, t_list *start);
+int		init_ants(t_anthill *anthill);
 /*
 ** ----------------------------- CLEAN -----------------------------------------
 */

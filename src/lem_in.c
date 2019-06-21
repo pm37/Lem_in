@@ -19,7 +19,6 @@ static void		init_anthill(t_anthill *anthill)
 	anthill->start = NULL;
 	anthill->end = NULL;
 	anthill->room_qty = 0;
-	anthill->rounds = 0;
 	anthill->rounds = INT_MAX;
 	anthill->id = 0;
 }
@@ -36,5 +35,8 @@ int				main(void)
 	if (!(find_paths(&anthill, &paths)))
 		return (0);
 	print_paths(paths);
+	ft_lstrev(&paths);
+	init_ants(&anthill);
+	print_output(&anthill, paths);
 	return (0);
 }

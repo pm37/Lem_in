@@ -67,6 +67,9 @@ SRC += add_rooms.c
 SRC += find_paths.c
 SRC += init_paths.c
 SRC += add_paths.c
+SRC += init_ants.c
+SRC += add_ants.c
+SRC += print_output.c
 
 
 DSYM = $(NAME).dSYM
