@@ -6,7 +6,7 @@
 /*   By: pimichau <pimichau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/14 14:38:19 by pimichau          #+#    #+#             */
-/*   Updated: 2019/06/21 13:52:07 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/06/21 15:05:09 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,10 @@ int				main(void)
 	if (!(find_paths(&anthill, anthill.start, anthill.end, &paths)))
 		return (0);
 	//print_paths(paths);
-//	ft_lstrev(&paths);
-//	init_ants(&anthill);
-//	print_output(&anthill, paths);
+	ft_lstrev(&paths);
+	//print_paths(paths);
+	init_ants(&anthill);
+	print_output(&anthill, paths);
 	ft_putnbrendl(anthill.rounds);
 	return (0);
 }

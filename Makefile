@@ -6,7 +6,7 @@
 #    By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/21 16:04:21 by bwan-nan          #+#    #+#              #
-#    Updated: 2019/06/21 15:01:24 by bwan-nan         ###   ########.fr        #
+#    Updated: 2019/06/21 15:05:27 by bwan-nan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,7 +74,7 @@ SRC += deviation.c
 SRC += complete_paths.c
 SRC += update_tunnels.c
 SRC += test_solution.c
-SRC += print_output.c
+SRC += print_solution.c
 
 
 DSYM = $(NAME).dSYM
