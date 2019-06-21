@@ -2,14 +2,20 @@
 ## 2nd argument corresponds to the type of test you want the generator to do
 ## To read the generator manual: type `./generator --help`
 
+POWDER_BLUE=$(tput setaf 153)
+WHITE=$(tput setaf 7)
+BRIGHT=$(tput bold)
+NORMAL=$(tput sgr0)
+UNDERLINE=$(tput smul)
+RED=$(tput setaf 1)
+
 if [ "$1" != "" ] && [ "$2" != "" ] && [ -f "generator" ] && [ -f "lem_in" ] ; then
 	total=$1
 	for ((i=1; i<=$total; i++))
 	do
 		./generator $2 > test.txt
 		sleep 1
-		./lem_in < test.txt > output.txt
-		rounds=`cat output.txt`
+		rounds=`./lem_in < test.txt | wc -l`
 		expected=`tail -n 1 test.txt | grep -Eo "\d+"`
 		deviation=$((rounds-expected))
 		echo "scale=2; $deviation*100/$expected" | bc > percentage.txt
@@ -31,10 +37,9 @@ if [ "$1" != "" ] && [ "$2" != "" ] && [ -f "generator" ] && [ -f "lem_in" ] ; t
 	deviation=$((total2-total1))
 	echo "scale=2; $deviation*100/$total1" | bc > percentage.txt
 	percentage=`cat percentage.txt`
-	printf "TOTAL      : Expected: %5d | Output: %5d  (diff: %5.2f%%)"\
+	printf "${BRIGHT}${WHITE}TOTAL      : Expected: %5d | Output: %5d  (diff: %5.2f%%)${NORMAL}"\
 	$total1 $total2 $percentage
-	echo "\n\nStandard deviation: $((sum/total)) round$c"
+	echo "\n\n${WHITE}${BRIGHT}Standard deviation: $((sum/total)) round$c${NORMAL}"
 	rm test.txt
-	rm output.txt
 	rm percentage.txt
 fi

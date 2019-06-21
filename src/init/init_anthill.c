@@ -6,7 +6,7 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/23 12:28:21 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/06/11 14:38:10 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/06/21 17:21:37 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ int				create_anthill(t_anthill *anthill)
 			return (ret_freeline(0, &line)); // && ret_freeanthill();
 		ft_strdel(&line);
 	}
+	if (!anthill->start || !anthill->end)
+		return (0);
 	if (!add_tunnel(anthill, line))
 		return (ret_freeline(0, &line));
 	ft_strdel(&line);

@@ -6,7 +6,7 @@
 /*   By: pimichau <pimichau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/14 16:14:17 by pimichau          #+#    #+#             */
-/*   Updated: 2019/06/21 14:38:21 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/06/21 17:31:09 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ typedef struct			s_room
 	int					end;
 	int 				path_id;
 	int 				ant_id;
-	int 				population;
+	unsigned int	 		population;
 	int 				new_path_id;
 	bool 				deviation;
 	bool				visited;
@@ -37,7 +37,7 @@ typedef struct			s_room
 
 typedef struct			s_anthill
 {
-	int				ant_qty;
+	unsigned int			ant_qty;
 	int				room_qty;
 	int 			rounds;
 	int 			id;
@@ -111,7 +111,7 @@ int		check_dead_end(t_anthill *anthill);
 void 	del_steps(void *content, size_t size);
 
 
-int	test_solution(t_list *paths, int ant_qty);
+int	test_solution(t_list *paths, unsigned int ant_qty);
 void	update_data(t_anthill *anthill, int rounds);
 void	complete_paths(t_list **paths);
 void	set_tunnels_usage(t_list *end);

@@ -6,7 +6,7 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/21 13:43:17 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/06/21 13:54:32 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/06/21 17:32:07 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,11 @@ static void 	increment_sent_values(t_list *path)
 	}
 }
 
-static t_list 	*get_longest_path(t_list *path, int ant_qty)
+static t_list 	*get_longest_path(t_list *path, unsigned int ant_qty)
 {
-	t_list	*head;
-	int 		ant_qty_out;
-	int 		path_len;
+	t_list			*head;
+	unsigned int	 	ant_qty_out;
+	int 			path_len;
 
 	if (!path->next)
 		return (path);
@@ -63,7 +63,7 @@ static t_list 	*get_longest_path(t_list *path, int ant_qty)
 	return (get_longest_path(head->next, ant_qty));
 }
 
-int	 	test_solution(t_list *paths, int ant_qty)
+int	 	test_solution(t_list *paths, unsigned int ant_qty)
 {
 	t_list	*used_path;
 	int 		rounds;
