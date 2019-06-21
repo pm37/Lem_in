@@ -6,7 +6,7 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/31 13:53:37 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/06/13 00:21:02 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/06/20 16:29:41 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ int				init_paths(t_list **paths, t_list *start)
 		}
 		tunnel = tunnel->next;
 	}
-  ft_printf("initialized %d path%s"
+ /* ft_printf("initialized %d path%s"
   , ft_lstcount(*paths)
-  , ft_lstcount(*paths) > 1 ? "s\n" : "\n");
+  , ft_lstcount(*paths) > 1 ? "s\n" : "\n");*/
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: pimichau <pimichau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/14 16:14:17 by pimichau          #+#    #+#             */
-/*   Updated: 2019/06/18 11:40:45 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/06/21 12:19:50 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ typedef struct 			s_ant
 } 									t_ant;
 
 int		create_anthill(t_anthill *anthill);
-int		find_paths(t_anthill *anthill, t_list **paths);
+bool	find_paths(t_anthill *anthill, t_list *start
+		, t_list *end, t_list **paths);
 bool	bfs(t_list *start, t_list *end, t_list **queue);
 int 	going_to_deviate(t_list *current, t_list *room);
 
