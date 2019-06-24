@@ -6,7 +6,7 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 12:44:36 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/06/24 14:00:29 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/06/24 18:02:08 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ static int		set_both_ends(t_room *room, t_list *input)
 	else if ((b = ft_strequ(((t_input *)input->content)->line, "##end"))
 	&& end >= 2)
 		return (0);
-	if (a && (room->end = 0))
-		end++;
+	if (a && ++end)
+		room->end = 0;
 	else if (b && (room->end = 1))
 		end += 2;
 	return (1);
@@ -67,6 +67,9 @@ static void		init_pointer_to_end(t_anthill *anthill, t_list *ptr, int end)
 
 static int		init_room(t_anthill *anthill, t_room *room, char **tab)
 {
+	if (!tab[0] || !tab[1] || !tab[2] || tab[0][0] == 'L' || tab[0][0] == '#'
+	|| !ft_isinteger(tab[1]) || !ft_isinteger(tab[2]))
+		return (0);
 	if (!(room->name = ft_strdup(tab[0])))
 		return (0);
 	room->x = ft_atoi(tab[1]);
@@ -104,7 +107,8 @@ int				add_room(t_anthill *anthill, t_list **input)
 	}
 	else if (((t_input *)(*input)->content)->line[0] == '#')
 		return (1);
-	if (!(*input) || !(tab = ft_strsplit(((t_input *)(*input)->content)->line, ' ')))
+	if (!(*input)
+	|| !(tab = ft_split_whitespaces(((t_input *)(*input)->content)->line)))
 		return (0);
 	if (!init_room(anthill, &room, tab) || !room_checker(anthill, tab)
 	|| !(new = ft_lstnew(&room, sizeof(t_room))))

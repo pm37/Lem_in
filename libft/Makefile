@@ -6,7 +6,7 @@
 #    By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/07 17:52:27 by bwan-nan          #+#    #+#              #
-#    Updated: 2019/06/19 16:28:46 by bwan-nan         ###   ########.fr        #
+#    Updated: 2019/06/24 18:01:36 by bwan-nan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -108,6 +108,7 @@ SRC += ft_strnew.c
 SRC += ft_strnstr.c
 SRC += ft_strrchr.c
 SRC += ft_strsplit.c
+SRC += ft_split_whitespaces.c
 SRC += ft_strstr.c
 SRC += ft_strsub.c
 SRC += ft_strtrim.c
