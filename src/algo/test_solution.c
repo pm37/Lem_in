@@ -6,13 +6,13 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/21 13:43:17 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/06/24 15:59:50 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/06/24 17:19:58 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void		update_data(t_anthill *anthill, int rounds, t_list *paths)
+void		update_data(t_anthill *anthill, int rounds, t_list **paths)
 {
 	t_list	*room;
 
@@ -29,8 +29,9 @@ void		update_data(t_anthill *anthill, int rounds, t_list *paths)
 		((t_room *)room->content)->new_path_id = 0;
 		room = room->next;
 	}
+	ft_lstrev(paths);
 	if (anthill->option & DISPLAY_PATHS)
-		print_paths(paths);
+		print_paths(*paths);
 	anthill->rounds = rounds;
 }
 

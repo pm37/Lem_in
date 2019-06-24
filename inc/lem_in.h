@@ -6,7 +6,7 @@
 /*   By: pimichau <pimichau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/14 16:14:17 by pimichau          #+#    #+#             */
-/*   Updated: 2019/06/24 16:54:43 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/06/24 17:20:08 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ bool	get_paths(t_anthill *anthill, t_list *start
 bool	bfs(t_list *start, t_list *end, t_list **queue);
 int	test_solution(t_anthill *anthill, t_list *paths
 	, unsigned int ant_qty);
-void	update_data(t_anthill *anthill, int rounds, t_list *paths);
+void	update_data(t_anthill *anthill, int rounds, t_list **paths);
 void	complete_paths(t_list **paths);
 void	set_tunnels_usage(t_list *end);
 int	init_queue(t_list **queue, t_list *start);
