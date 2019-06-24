@@ -6,7 +6,7 @@
 /*   By: pimichau <pimichau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/14 16:14:17 by pimichau          #+#    #+#             */
-/*   Updated: 2019/06/24 15:53:33 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/06/24 16:54:43 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,6 @@ typedef struct			s_anthill
 	t_list				*ants;
 }						t_anthill;
 
-typedef struct			s_input
-{
-	char			*line;
-}				t_input;
-
 typedef struct			s_tunnel
 {
 	int			usage;
@@ -77,22 +72,17 @@ typedef struct 			s_ant
 	t_room 						*position;
 } 									t_ant;
 
-int		create_anthill(t_anthill *anthill, t_list *input);
-bool	get_paths(t_anthill *anthill, t_list *start
-		, t_list *end, t_list **paths);
-bool	bfs(t_list *start, t_list *end, t_list **queue);
+typedef struct			s_input
+{
+	char			*line;
+}				t_input;
 
 /*
-** ---------------------------- TOOLS ------------------------------------------
+** ----------------------------- INIT ------------------------------------------
 */
-int		ret_freetab(int ret, char **tab);
-int		ret_freeline(int ret, char **line);
-int		ret_print(int ret, char *msg);
-void	free_tab(char **tab);
-int		copy_path(void *dest, void *src);
-int		copy_steps(void *dest, void *src);
-t_list	*compare_steps(t_list *l1, t_list *l2);
-void	del_path(void *content, size_t size);
+int		create_anthill(t_anthill *anthill, t_list *input);
+int		init_paths(t_list **paths, t_list *start, unsigned int option);
+int		init_ants(t_anthill *anthill);
 /*
 ** ------------------------------ ADD ------------------------------------------
 */
@@ -102,24 +92,11 @@ int		add_step(t_list **steps, t_list *room);
 int		add_path(t_list **paths);
 int		add_ant(int id, t_anthill *anthill);
 /*
-** ---------------------------- DISPLAY ----------------------------------------
+** ----------------------------- ALGO -----------------------------------------
 */
-void	print_paths(t_list *paths);
-void	print_steps(t_list *steps);
-void    print_output(t_anthill *anthill, t_list *paths);
-/*
-** ----------------------------- INIT ------------------------------------------
-*/
-int		init_paths(t_list **paths, t_list *start, unsigned int option);
-int		init_ants(t_anthill *anthill);
-/*
-** ----------------------------- CLEAN -----------------------------------------
-*/
-void	clean_paths(t_anthill *anthill);
-int		check_dead_end(t_anthill *anthill);
-void 	del_steps(void *content, size_t size);
-
-
+bool	get_paths(t_anthill *anthill, t_list *start
+		, t_list *end, t_list **paths);
+bool	bfs(t_list *start, t_list *end, t_list **queue);
 int	test_solution(t_anthill *anthill, t_list *paths
 	, unsigned int ant_qty);
 void	update_data(t_anthill *anthill, int rounds, t_list *paths);
@@ -131,9 +108,33 @@ bool	going_to_deviate(t_list *current, t_list *room);
 bool	deviation_reaches_end(t_list *deviation_room, t_list *end);
 bool	start_linked_to_end(t_list *start, t_list *end);
 bool	init_the_only_path(t_list **paths, t_anthill *anthill);
-int	get_input(t_list **input);
+/*
+** ---------------------------- DISPLAY ----------------------------------------
+*/
+void	print_paths(t_list *paths);
+void	print_steps(t_list *steps);
+void    print_output(t_anthill *anthill, t_list *paths);
 void	print_input(t_list *input);
+/*
+** ----------------------------- CLEAN -----------------------------------------
+*/
+void	clean_paths(t_anthill *anthill);
+int		check_dead_end(t_anthill *anthill);
+void 	del_steps(void *content, size_t size);
+/*
+** ---------------------------- TOOLS ------------------------------------------
+*/
+int		ret_freetab(int ret, char **tab);
+int		ret_freeline(int ret, char **line);
+int		ret_print(int ret, char *msg);
+void	free_tab(char **tab);
+int		copy_path(void *dest, void *src);
+int		copy_steps(void *dest, void *src);
+t_list	*compare_steps(t_list *l1, t_list *l2);
+void	del_path(void *content, size_t size);
+int	get_input(t_list **input);
 int	is_a_comment(char *line);
 int	is_an_end_room(char *line);
+
 
 #endif
