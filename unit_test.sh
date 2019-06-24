@@ -14,7 +14,7 @@ BLINK=$(tput blink)
 REVERSE=$(tput smso)
 UNDERLINE=$(tput smul)
 
-if [ "$1" != "" ] && [ -f "generator" ] && [ -f "generator" ] && [ -f "lem_in" ] ; then
+if [ "$1" != "" ] && [ -f "generator" ] && [ -f "generator" ] && [ -f "lem_in" ] && [ "$2" == "" ] ; then
 	printf "${UNDERLINE}${BRIGHT}${WHITE}Launching $1 tests for all categories of the generator\n\n"
 	printf "${UNDERLINE}${BRIGHT}${POWDER_BLUE}1) flow-one: generates an ant farm with distinctive path and [1] ant in it${NORMAL}\n"
 	./test.sh $1 --flow-one
@@ -30,4 +30,6 @@ if [ "$1" != "" ] && [ -f "generator" ] && [ -f "generator" ] && [ -f "lem_in" ]
 
 	printf "\n${UNDERLINE}${BRIGHT}${POWDER_BLUE}5) big-superposition : generates a big map with overlapping paths${NORMAL}\n"
 	./test.sh $1 --big-superposition
+elif [ "$1" != "" ] && [ -f "generator" ] && [ -f "generator" ] && [ -f "lem_in" ] && [ "$2" != "" ] ; then
+	./test.sh $1 $2
 fi

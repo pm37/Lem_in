@@ -15,7 +15,7 @@ if [ "$1" != "" ] && [ "$2" != "" ] && [ -f "generator" ] && [ -f "lem_in" ] ; t
 	do
 		./generator $2 > test.txt
 		sleep 1
-		rounds=`./lem_in < test.txt | wc -l`
+		rounds=`./lem_in < test.txt --solution | wc -l`
 		expected=`tail -n 1 test.txt | grep -Eo "\d+"`
 		deviation=$((rounds-expected))
 		echo "scale=2; $deviation*100/$expected" | bc > percentage.txt

@@ -57,8 +57,10 @@ static void 	move_ants_forward(t_anthill *anthill, t_list *paths)
 
 void       		print_output(t_anthill *anthill, t_list *paths)
 {
-  ((t_room *)anthill->start->content)->population = anthill->ant_qty;
-  ((t_room *)anthill->start->content)->ant_id = 1;
-  while (((t_room *)anthill->end->content)->population < anthill->ant_qty)
-	  move_ants_forward(anthill, paths);
+	if (!(anthill->option & ONLY_DISPLAY_SOLUTION))
+		ft_putchar('\n');
+	((t_room *)anthill->start->content)->population = anthill->ant_qty;
+	((t_room *)anthill->start->content)->ant_id = 1;
+	while (((t_room *)anthill->end->content)->population < anthill->ant_qty)
+		move_ants_forward(anthill, paths);
 }

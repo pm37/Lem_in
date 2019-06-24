@@ -6,37 +6,42 @@
 /*   By: pimichau <pimichau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/14 14:38:19 by pimichau          #+#    #+#             */
-/*   Updated: 2019/06/21 16:13:47 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/06/24 15:37:23 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-#include <limits.h>
 
-static void		init_anthill(t_anthill *anthill)
+void	get_option(t_anthill *anthill, int ac, char **av)
 {
-	anthill->rooms = NULL;
-	anthill->start = NULL;
-	anthill->end = NULL;
-	anthill->room_qty = 0;
-	anthill->rounds = INT_MAX;
-	anthill->id = 0;
+	if (ac == 2)
+	{
+		if (ft_strequ(av[1], "--paths"))
+			anthill->option |= DISPLAY_PATHS;
+		else if (ft_strequ(av[1], "--solution"))
+			anthill->option |= ONLY_DISPLAY_SOLUTION;
+	}
 }
 
-int				main(void)
+int		main(int ac, char **av)
 {
 	t_anthill	anthill;
+	t_list		*input;
 	t_list		*paths;
 
 	paths = NULL;
-	init_anthill(&anthill);
-	if (!create_anthill(&anthill))
-		return (ret_print(0, "ERROR")); // free everything
-	if (!(find_paths(&anthill, anthill.start, anthill.end, &paths)))
+	input = NULL;
+	if (!get_input(&input))
 		return (0);
-	//print_paths(paths);
+	if (!create_anthill(&anthill, input))
+		return (ret_print(0, "ERROR")); // free everything
+	get_option(&anthill, ac, av);
+	if (!find_paths(&anthill, &paths))
+		return (0);
 	ft_lstrev(&paths);
 	init_ants(&anthill);
+	if (!anthill.option)
+		print_input(input);
 	print_output(&anthill, paths);
 	//ft_putnbrendl(anthill.rounds);
 	return (0);

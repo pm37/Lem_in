@@ -6,13 +6,13 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/31 13:53:37 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/06/20 16:29:41 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/06/24 16:12:46 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static int		init_path(t_list **paths, t_list *room)
+static int	init_path(t_list **paths, t_list *room)
 {
   t_list      *new_path;
 	t_path	    path;
@@ -30,10 +30,10 @@ static int		init_path(t_list **paths, t_list *room)
 	return (1);
 }
 
-int				init_paths(t_list **paths, t_list *start)
+int		init_paths(t_list **paths, t_list *start, unsigned int option)
 {
-	t_list	*room;
-	t_list	*tunnel;
+	t_list		*room;
+	t_list		*tunnel;
 
 	room = start;
 	tunnel = ((t_room *)(room->content))->tunnels;
@@ -46,8 +46,11 @@ int				init_paths(t_list **paths, t_list *start)
 		}
 		tunnel = tunnel->next;
 	}
- /* ft_printf("initialized %d path%s"
-  , ft_lstcount(*paths)
-  , ft_lstcount(*paths) > 1 ? "s\n" : "\n");*/
+	if (option & DISPLAY_PATHS)
+	{
+ 		ft_printf("{ul}{bold}Initialized %d path%s{nc}"
+ 	 	, ft_lstcount(*paths)
+  		, ft_lstcount(*paths) > 1 ? "s:\n" : ":\n");
+	}
 	return (1);
 }

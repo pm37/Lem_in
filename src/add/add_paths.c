@@ -6,7 +6,7 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/31 15:15:45 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/06/13 00:25:03 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/06/24 14:55:18 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int		duplicate_path(t_anthill *anthill, t_list *target)
 	return (1);
 }
 */
-
+/*
 int				add_step(t_list **steps, t_list *room)
 {
 	t_list	*new_step;
@@ -45,6 +45,7 @@ int				add_step(t_list **steps, t_list *room)
 	ft_lstprepend(steps, new_step);
 	return (1);
 }
+*/
 /*
 int				add_path(t_anthill *anthill, t_list *target, t_list *room)
 {

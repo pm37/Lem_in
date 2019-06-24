@@ -6,13 +6,13 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/21 13:43:17 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/06/21 17:32:07 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/06/24 15:59:50 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void		update_data(t_anthill *anthill, int rounds)
+void		update_data(t_anthill *anthill, int rounds, t_list *paths)
 {
 	t_list	*room;
 
@@ -29,6 +29,8 @@ void		update_data(t_anthill *anthill, int rounds)
 		((t_room *)room->content)->new_path_id = 0;
 		room = room->next;
 	}
+	if (anthill->option & DISPLAY_PATHS)
+		print_paths(paths);
 	anthill->rounds = rounds;
 }
 
@@ -63,7 +65,8 @@ static t_list 	*get_longest_path(t_list *path, unsigned int ant_qty)
 	return (get_longest_path(head->next, ant_qty));
 }
 
-int	 	test_solution(t_list *paths, unsigned int ant_qty)
+int	 	test_solution(t_anthill *anthill, t_list *paths
+		, unsigned int ant_qty)
 {
 	t_list	*used_path;
 	int 		rounds;
@@ -75,10 +78,19 @@ int	 	test_solution(t_list *paths, unsigned int ant_qty)
 		used_path = get_longest_path(used_path, ant_qty);
 		increment_sent_values(used_path);
 		ant_qty -= ft_lstcount(used_path);
-		//ft_printf("nb of paths used = %d, ant_qty = %d\n", ft_lstcount(used_path), ant_qty);
 		rounds++;
 	}
 	rounds += ((t_path *)used_path->content)->len - 1;
-	//del_paths ?
+	if (anthill->option & DISPLAY_PATHS)
+	{
+		if (rounds >= anthill->rounds)
+			ft_printf(
+			"This solution would take {red}%d rounds{nc}\n"
+			, rounds);
+		else
+			ft_printf(
+			"This solution would take {green}%d rounds{nc}\n"
+			, rounds);
+	}
 	return (rounds);
 }
