@@ -32,7 +32,7 @@ int				main(void)
 	init_anthill(&anthill);
 	if (!create_anthill(&anthill))
 		return (ret_print(0, "ERROR")); // free everything
-	if (!(find_paths(&anthill, anthill.start, anthill.end, &paths)))
+	if (!(get_paths(&anthill, anthill.start, anthill.end, &paths)))
 		return (0);
 	//print_paths(paths);
 	ft_lstrev(&paths);
@@ -40,5 +40,5 @@ int				main(void)
 	init_ants(&anthill);
 	print_output(&anthill, paths);
 	ft_putnbrendl(anthill.rounds);
-	return (0);
+	return (0); //free everything (rooms, paths, ants, tunnels)
 }

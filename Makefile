@@ -75,6 +75,7 @@ SRC += complete_paths.c
 SRC += update_tunnels.c
 SRC += test_solution.c
 SRC += print_solution.c
+SRC += start_linked_to_end.c
 
 
 DSYM = $(NAME).dSYM

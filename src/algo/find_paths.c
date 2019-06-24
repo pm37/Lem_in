@@ -39,10 +39,10 @@ bool		bfs(t_list *start, t_list *end, t_list **queue)
 	return (found_augmented_path);
 }
 
-bool		find_paths(t_anthill *anthill, t_list *start
+static bool	find_paths(t_anthill *anthill, t_list *start
 		, t_list *end, t_list **paths)
 {
-	int			ret;
+	int		ret;
 	t_list	*queue;
 	t_list	*previous_paths;
 
@@ -67,4 +67,14 @@ bool		find_paths(t_anthill *anthill, t_list *start
 		ft_lstdel(&previous_paths, del_steps);
 	}
 	return (anthill->rounds != INT_MAX);
+}
+
+bool		get_paths(t_anthill *anthill, t_list *start, t_list *end,
+			t_list **paths)
+{
+	if (start_linked_to_end(start, end))
+		return (init_the_only_path(paths, anthill));
+	if (!(find_paths(anthill, start, end, paths)))
+		return (false);
+	return (true);
 }

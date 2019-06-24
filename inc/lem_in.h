@@ -69,7 +69,7 @@ typedef struct 			s_ant
 } 									t_ant;
 
 int		create_anthill(t_anthill *anthill);
-bool	find_paths(t_anthill *anthill, t_list *start
+bool	get_paths(t_anthill *anthill, t_list *start
 		, t_list *end, t_list **paths);
 bool	bfs(t_list *start, t_list *end, t_list **queue);
 
@@ -119,5 +119,7 @@ int	init_queue(t_list **queue, t_list *start);
 int	complete_queue(t_list *queue, t_list *end);
 bool	going_to_deviate(t_list *current, t_list *room);
 bool	deviation_reaches_end(t_list *deviation_room, t_list *end);
+bool	start_linked_to_end(t_list *start, t_list *end);
+bool	init_the_only_path(t_list **paths, t_anthill *anthill);
 
 #endif

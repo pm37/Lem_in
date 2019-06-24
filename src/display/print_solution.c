@@ -55,10 +55,29 @@ static void 	move_ants_forward(t_anthill *anthill, t_list *paths)
 	move_ants_from_start(ant, anthill, paths);
 }
 
+static void		move_all_ants(t_anthill *anthill)
+{
+	int		i;
+
+	i = 0;
+	while (++i < anthill->ant_qty)
+		ft_printf("L%d-%s ", i, ((t_room *)anthill->end->content)->name);
+	ft_printf("L%d-%s\n", i, ((t_room *)anthill->end->content)->name);
+	anthill->rounds = 1;
+}
+
 void       		print_output(t_anthill *anthill, t_list *paths)
 {
-  ((t_room *)anthill->start->content)->population = anthill->ant_qty;
-  ((t_room *)anthill->start->content)->ant_id = 1;
-  while (((t_room *)anthill->end->content)->population < anthill->ant_qty)
-	  move_ants_forward(anthill, paths);
+	t_path	*path;
+
+	path = paths->content;
+	((t_room *)anthill->start->content)->population = anthill->ant_qty;
+	((t_room *)anthill->start->content)->ant_id = 1;
+	if (ft_lstcount(paths) == 1 && path->len == 1)
+	{
+		move_all_ants(anthill);
+		return ;
+	}
+	while (((t_room *)anthill->end->content)->population < anthill->ant_qty)
+		move_ants_forward(anthill, paths);
 }
