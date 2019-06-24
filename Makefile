@@ -6,7 +6,7 @@
 #    By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/21 16:04:21 by bwan-nan          #+#    #+#              #
-#    Updated: 2019/06/21 15:05:27 by bwan-nan         ###   ########.fr        #
+#    Updated: 2019/06/24 13:13:21 by bwan-nan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,12 +55,15 @@ SRC += ret_freeline.c
 SRC += ret_freetab.c
 SRC += ret_print.c
 SRC += print_paths.c
+SRC += print_input.c
 SRC += compare_steps.c
 SRC += clean_paths.c
 SRC += del_functions.c
 SRC += copy_functions.c
+SRC += is_a_comment.c
 
 SRC += lem_in.c
+SRC += get_input.c
 SRC += add_tunnels.c
 SRC += init_anthill.c
 SRC += add_rooms.c

@@ -6,7 +6,7 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 12:44:36 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/06/18 11:40:55 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/06/24 14:00:29 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int		room_checker(t_anthill *anthill, char **tab)
 	return (1);
 }
 
-static int		set_both_ends(t_room *room, char **line)
+static int		set_both_ends(t_room *room, t_list *input)
 {
 	static int		end = 0;
 	int				a;
@@ -44,23 +44,16 @@ static int		set_both_ends(t_room *room, char **line)
 
 	a = 0;
 	b = 0;
-	if ((a = ft_strequ(*line, "##start")) && (end == 1 || end == 3))
+	if ((a = ft_strequ(((t_input *)input->content)->line, "##start"))
+	&& (end == 1 || end == 3))
 		return (0);
-	else if ((b = ft_strequ(*line, "##end")) && end >= 2)
+	else if ((b = ft_strequ(((t_input *)input->content)->line, "##end"))
+	&& end >= 2)
 		return (0);
-	get_next_line(0, line);
-	if (*line == NULL)
-		return (0);
-	if (a)
-	{
-		room->end = 0;
+	if (a && (room->end = 0))
 		end++;
-	}
-	else if (b)
-	{
-		room->end = 1;
+	else if (b && (room->end = 1))
 		end += 2;
-	}
 	return (1);
 }
 
@@ -94,28 +87,30 @@ static int		init_room(t_anthill *anthill, t_room *room, char **tab)
 	return (1);
 }
 
-int				add_room(t_anthill *anthill, char *line)
+int				add_room(t_anthill *anthill, t_list **input)
 {
 	char			**tab;
 	t_room			room;
 	t_list			*new;
 
-	if (line[0] == 'L')
+	if (((t_input *)(*input)->content)->line[0] == 'L')
 		return (0);
 	room.end = -1;
-	if (ft_strequ(line, "##start") || ft_strequ(line, "##end"))
+	if (is_an_end_room(((t_input *)(*input)->content)->line))
 	{
-		if (!set_both_ends(&room, &line))
+		if (!set_both_ends(&room, *input))
 			return (0);
+		*input = (*input)->next;
 	}
-	else if (line[0] == '#')
+	else if (((t_input *)(*input)->content)->line[0] == '#')
 		return (1);
-	tab = ft_strsplit(line, ' ');
+	if (!(*input) || !(tab = ft_strsplit(((t_input *)(*input)->content)->line, ' ')))
+		return (0);
 	if (!init_room(anthill, &room, tab) || !room_checker(anthill, tab)
 	|| !(new = ft_lstnew(&room, sizeof(t_room))))
 		return (ret_freetab(0, tab));
 	if (room.end != -1)
 		init_pointer_to_end(anthill, new, room.end);
 	ft_lstappend(&anthill->rooms, new);
-	return (1);
+	return (ret_freetab(1, tab));
 }

@@ -6,7 +6,7 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/21 13:55:42 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/06/21 13:59:42 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/06/24 14:54:47 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,3 @@ void		complete_paths(t_list **paths)
 	ft_lst_mergesort(paths, sort_by_len);
 	elem = *paths;
 }
-

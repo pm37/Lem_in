@@ -6,7 +6,7 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/31 12:46:19 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/06/21 14:55:55 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/06/24 15:53:45 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,31 +39,30 @@ bool		bfs(t_list *start, t_list *end, t_list **queue)
 	return (found_augmented_path);
 }
 
-static bool	find_paths(t_anthill *anthill, t_list *start
-		, t_list *end, t_list **paths)
+static bool	find_paths(t_anthill *anthill, t_list **paths)
 {
 	int		ret;
 	t_list	*queue;
 	t_list	*previous_paths;
 
 	queue = NULL;
-	while (bfs(start, end, &queue))
+	while (bfs(anthill->start, anthill->end, &queue))
 	{
 		previous_paths = *paths;
 		*paths = NULL;
 		ft_lstdel(&queue, del_steps);
-		set_tunnels_usage(end); // set a -1, 0 ou 1 les tunnels->usage de end a start en passant par les previous
-		if (!init_paths(paths, start))
+		set_tunnels_usage(anthill->end);
+		if (!init_paths(paths, anthill->start, anthill->option))
 			return (false);
 		complete_paths(paths);
-		ret = test_solution(*paths, anthill->ant_qty); //on teste le nb de lignes
-		if (ret > anthill->rounds || ret == 0) // et on compare a la solution precedente
+		ret = test_solution(anthill, *paths, anthill->ant_qty);
+		if (ret > anthill->rounds || ret == 0)
 		{
 			ft_lstdel(paths, del_steps);
 			*paths = previous_paths;
 			break ;
 		}
-		update_data(anthill, ret); // maj des pointeurs next et path_id + valeur anthill->rounds
+		update_data(anthill, ret, *paths);
 		ft_lstdel(&previous_paths, del_steps);
 	}
 	return (anthill->rounds != INT_MAX);
@@ -74,7 +73,7 @@ bool		get_paths(t_anthill *anthill, t_list *start, t_list *end,
 {
 	if (start_linked_to_end(start, end))
 		return (init_the_only_path(paths, anthill));
-	if (!(find_paths(anthill, start, end, paths)))
+	if (!(find_paths(anthill, paths)))
 		return (false);
 	return (true);
 }
