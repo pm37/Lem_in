@@ -6,7 +6,7 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/23 12:28:21 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/06/24 15:18:28 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/06/24 18:33:14 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,27 +15,12 @@
 
 static int		init_ant_qty(char *line, t_anthill *anthill)
 {
-	int					i;
-	char				cpy[21];
-	unsigned long long	nb;
-
-	i = -1;
-	while (line[++i])
-		if (!ft_isdigit(line[i]))
-			return (0);
-	if (i > 20)
-		return (0);
-	if (i == 20)
+	if (ft_isinteger(line))
 	{
-		ft_strcpy(cpy, line);
-		cpy[19] = '\0';
-		if ((nb = ft_atoull(cpy)) > 1844674407370955161)
-			return (0);
-		else if (nb == 1844674407370955161 && line[19] > '5')
-			return (0);
+		anthill->ant_qty = ft_atoull(line);
+		return (anthill->ant_qty > 0);
 	}
-	anthill->ant_qty = ft_atoull(line);
-	return (1);
+	return (0);
 }
 
 static int		end_of_rooms(char *line)

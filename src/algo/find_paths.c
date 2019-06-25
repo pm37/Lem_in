@@ -6,7 +6,7 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/31 12:46:19 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/06/24 15:53:45 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/06/24 18:17:35 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,18 +62,16 @@ static bool	find_paths(t_anthill *anthill, t_list **paths)
 			*paths = previous_paths;
 			break ;
 		}
-		update_data(anthill, ret, *paths);
+		update_data(anthill, ret, paths);
 		ft_lstdel(&previous_paths, del_steps);
 	}
-	return (anthill->rounds != INT_MAX);
+	return (anthill->rounds != INT_MAX && ret != 0);
 }
 
-bool		get_paths(t_anthill *anthill, t_list *start, t_list *end,
-			t_list **paths)
+bool		get_paths(t_anthill *anthill, t_list *start, t_list *end
+		, t_list **paths)
 {
 	if (start_linked_to_end(start, end))
 		return (init_the_only_path(paths, anthill));
-	if (!(find_paths(anthill, paths)))
-		return (false);
-	return (true);
+	return (find_paths(anthill, paths));
 }
