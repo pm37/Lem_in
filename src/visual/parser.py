@@ -11,8 +11,15 @@ tunnels = {}
 rounds = {}
 i = 1
 
+import os.path
+from os import path
+if path.exists("parsing.json"):
+    os.remove("parsing.json")
 for line in sys.stdin:
     line = line.rstrip('\n')
+    if (line == "ERROR"):
+        print("ERROR")
+        quit()
     if (line == ""):
         end_of_map = True
     elif (line[0] == '#' and line != "##start" and line != "##end"):
