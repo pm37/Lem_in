@@ -6,13 +6,13 @@
 /*   By: pimichau <pimichau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/14 14:38:19 by pimichau          #+#    #+#             */
-/*   Updated: 2019/06/24 18:14:30 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/06/28 12:46:35 by pimichau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void	get_option(t_anthill *anthill, int ac, char **av)
+static void	get_option(t_anthill *anthill, int ac, char **av)
 {
 	if (ac == 2)
 	{
@@ -23,7 +23,7 @@ void	get_option(t_anthill *anthill, int ac, char **av)
 	}
 }
 
-int		main(int ac, char **av)
+int			main(int ac, char **av)
 {
 	t_anthill	anthill;
 	t_list		*input;
@@ -32,9 +32,9 @@ int		main(int ac, char **av)
 	paths = NULL;
 	input = NULL;
 	if (!get_input(&input))
-		return (0);
+		return (ret_free_input(&input));
 	if (!create_anthill(&anthill, input))
-		return (ret_print(0, "ERROR")); // free everything
+		return (ret_print_free_all(&anthill, &input, &paths, "ERROR")); // free everything
 	get_option(&anthill, ac, av);
 	if (!(get_paths(&anthill, anthill.start, anthill.end, &paths)))
 		return (ret_print(0, "ERROR"));
@@ -43,5 +43,5 @@ int		main(int ac, char **av)
 		print_input(input);
 	print_output(&anthill, paths);
 	//ft_putnbrendl(anthill.rounds);
-	return (0);
+	return (ret_print_free_all(&anthill, &input, &paths, NULL));
 }

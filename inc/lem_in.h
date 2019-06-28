@@ -6,7 +6,7 @@
 /*   By: pimichau <pimichau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/14 16:14:17 by pimichau          #+#    #+#             */
-/*   Updated: 2019/06/24 17:20:08 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/06/28 12:41:27 by pimichau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,8 +133,10 @@ int		copy_steps(void *dest, void *src);
 t_list	*compare_steps(t_list *l1, t_list *l2);
 void	del_path(void *content, size_t size);
 int	get_input(t_list **input);
+int	ret_free_input(t_list **input);
 int	is_a_comment(char *line);
 int	is_an_end_room(char *line);
+int	ret_print_free_all(t_anthill *ath, t_list **input, t_list **paths, char *msg);
 
 
 #endif
