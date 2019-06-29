@@ -6,7 +6,7 @@
 /*   By: pimichau <pimichau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/14 16:14:17 by pimichau          #+#    #+#             */
-/*   Updated: 2019/06/24 17:20:08 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/06/26 16:44:20 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef struct			s_anthill
 {
 	unsigned int			ant_qty;
 	int				room_qty;
-	int 			rounds;
+	unsigned long		rounds;
 	unsigned int		option;
 	int 			id;
 	t_list				*rooms;
@@ -60,7 +60,7 @@ typedef struct			s_tunnel
 typedef struct			s_path
 {
 	int 							id;
-	int 							sent;
+	unsigned long 						sent;
 	int 							len;
 	bool 							complete;
 	t_list						*room;
@@ -80,34 +80,34 @@ typedef struct			s_input
 /*
 ** ----------------------------- INIT ------------------------------------------
 */
-int		create_anthill(t_anthill *anthill, t_list *input);
-int		init_paths(t_list **paths, t_list *start, unsigned int option);
-int		init_ants(t_anthill *anthill);
+int			create_anthill(t_anthill *anthill, t_list *input);
+int			init_paths(t_list **paths, t_list *start, unsigned int option);
+int			init_ants(t_anthill *anthill);
 /*
 ** ------------------------------ ADD ------------------------------------------
 */
-int		add_room(t_anthill *anthill, t_list **input);
-int		add_tunnel(t_anthill *anthill, char *line);
-int		add_step(t_list **steps, t_list *room);
-int		add_path(t_list **paths);
-int		add_ant(int id, t_anthill *anthill);
+int			add_room(t_anthill *anthill, t_list **input);
+int			add_tunnel(t_anthill *anthill, char *line);
+int			add_step(t_list **steps, t_list *room);
+int			add_path(t_list **paths);
+int			add_ant(int id, t_anthill *anthill);
 /*
 ** ----------------------------- ALGO -----------------------------------------
 */
-bool	get_paths(t_anthill *anthill, t_list *start
+bool		get_paths(t_anthill *anthill, t_list *start
 		, t_list *end, t_list **paths);
-bool	bfs(t_list *start, t_list *end, t_list **queue);
-int	test_solution(t_anthill *anthill, t_list *paths
-	, unsigned int ant_qty);
-void	update_data(t_anthill *anthill, int rounds, t_list **paths);
-void	complete_paths(t_list **paths);
-void	set_tunnels_usage(t_list *end);
-int	init_queue(t_list **queue, t_list *start);
-int	complete_queue(t_list *queue, t_list *end);
-bool	going_to_deviate(t_list *current, t_list *room);
-bool	deviation_reaches_end(t_list *deviation_room, t_list *end);
-bool	start_linked_to_end(t_list *start, t_list *end);
-bool	init_the_only_path(t_list **paths, t_anthill *anthill);
+bool		bfs(t_list *start, t_list *end, t_list **queue);
+unsigned long	test_solution(t_anthill *anthill, t_list *paths
+		, unsigned int ant_qty);
+void		update_data(t_anthill *anthill, unsigned long rounds, t_list **paths);
+void		complete_paths(t_list **paths);
+void		set_tunnels_usage(t_list *end);
+int		init_queue(t_list **queue, t_list *start);
+int		complete_queue(t_list *queue, t_list *end);
+bool		going_to_deviate(t_list *current, t_list *room);
+bool		deviation_reaches_end(t_list *deviation_room, t_list *end);
+bool		start_linked_to_end(t_list *start, t_list *end);
+bool		init_the_only_path(t_list **paths, t_anthill *anthill);
 /*
 ** ---------------------------- DISPLAY ----------------------------------------
 */

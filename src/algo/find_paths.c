@@ -6,7 +6,7 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/31 12:46:19 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/06/24 18:17:35 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/06/26 16:33:33 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ bool		bfs(t_list *start, t_list *end, t_list **queue)
 
 static bool	find_paths(t_anthill *anthill, t_list **paths)
 {
-	int		ret;
+	unsigned long	ret;
 	t_list	*queue;
 	t_list	*previous_paths;
 
@@ -65,7 +65,7 @@ static bool	find_paths(t_anthill *anthill, t_list **paths)
 		update_data(anthill, ret, paths);
 		ft_lstdel(&previous_paths, del_steps);
 	}
-	return (anthill->rounds != INT_MAX && ret != 0);
+	return (anthill->rounds != LONG_MAX && ret != 0);
 }
 
 bool		get_paths(t_anthill *anthill, t_list *start, t_list *end

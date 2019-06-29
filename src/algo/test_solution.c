@@ -6,13 +6,14 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/21 13:43:17 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/06/24 17:19:58 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/06/29 13:04:41 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void		update_data(t_anthill *anthill, int rounds, t_list **paths)
+void		update_data(t_anthill *anthill, unsigned long  rounds
+		, t_list **paths)
 {
 	t_list	*room;
 
@@ -66,11 +67,11 @@ static t_list 	*get_longest_path(t_list *path, unsigned int ant_qty)
 	return (get_longest_path(head->next, ant_qty));
 }
 
-int	 	test_solution(t_anthill *anthill, t_list *paths
+unsigned long 	 test_solution(t_anthill *anthill, t_list *paths
 		, unsigned int ant_qty)
 {
 	t_list	*used_path;
-	int 		rounds;
+	unsigned long 	rounds;
 
 	rounds = 0;
 	used_path = paths;
@@ -84,13 +85,13 @@ int	 	test_solution(t_anthill *anthill, t_list *paths
 	rounds += ((t_path *)used_path->content)->len - 1;
 	if (anthill->option & DISPLAY_PATHS)
 	{
-		if (rounds >= anthill->rounds)
+		if (rounds > anthill->rounds)
 			ft_printf(
-			"This solution would take {red}%d rounds{nc}\n"
+			"This solution would take {red}%ld rounds{nc}\n"
 			, rounds);
 		else
 			ft_printf(
-			"This solution would take {green}%d rounds{nc}\n"
+			"This solution would take {green}%ld rounds{nc}\n"
 			, rounds);
 	}
 	return (rounds);

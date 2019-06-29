@@ -6,7 +6,7 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/23 12:28:21 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/06/24 18:33:14 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/06/26 16:33:11 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void		init_anthill(t_anthill *anthill)
 	anthill->start = NULL;
 	anthill->end = NULL;
 	anthill->room_qty = 0;
-	anthill->rounds = INT_MAX;
+	anthill->rounds = LONG_MAX;
 	anthill->id = 0;
 	anthill->option = 0;
 }

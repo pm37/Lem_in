@@ -6,7 +6,7 @@
 #    By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/21 16:04:21 by bwan-nan          #+#    #+#              #
-#    Updated: 2019/06/24 13:13:21 by bwan-nan         ###   ########.fr        #
+#    Updated: 2019/06/26 12:12:24 by bwan-nan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -123,11 +123,9 @@ clean :
 	$(CLEANUP) $(OBJ)
 	$(CLEANUP) $(OPATH)
 	$(CLEANUP) $(DSYM)
-	printf "$(RED)All objects removed from Libft\n$(NC)"
 	printf "$(RED)All objects removed from Lem_in\n$(NC)"
 
 fclean : clean
-	$(MAKE) -C $(LPATH) fclean
 	$(CLEANUP) $(OPATH)
 	$(CLEANUP) $(NAME)
 	printf "$(RED)$(NAME) deleted\n$(NC)"
@@ -135,5 +133,5 @@ fclean : clean
 re: fclean all
 
 .PHONY: all clean fclean debug
-.SILENT:
 FORCE:
+.SILENT:

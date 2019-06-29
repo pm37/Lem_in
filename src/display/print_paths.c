@@ -6,7 +6,7 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/31 13:49:27 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/06/24 16:13:03 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/06/29 13:01:21 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void		print_path(t_list *room)
 */
 void print_steps(t_list *room)
 {
-	ft_printf("{green}#%2d:{nc} ", ((t_room *)room->content)->path_id);
+	ft_printf("{green}# %2d:{nc} ", ((t_room *)room->content)->path_id);
 	while (room)
 	{
 		ft_printf("%s%c"
