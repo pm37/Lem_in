@@ -6,14 +6,26 @@
 //   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2019/06/26 14:46:10 by bwan-nan          #+#    #+#             //
-//   Updated: 2019/06/29 22:48:31 by bwan-nan         ###   ########.fr       //
+//   Updated: 2019/07/01 00:20:42 by bwan-nan         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
+var     cy;
+var     data;
+var     moves;
+var     origins;
+var     tunnels = [];
+var     tunnel;
+var     from = [];
+var     k = 0;
+var     ants_out = 0;
+var     time; 
+var     pause = false;
+
 $(document).ready(function() {
-    $.getJSON("data.json", function(data) {
-	//	console.log(data);
-		var cy = cytoscape({
+    $.getJSON("data.json", function(json) {
+        data = json;
+		cy = cytoscape({
 			container: $("#cy"),
 			elements: data,
 			layout: {
@@ -41,7 +53,15 @@ $(document).ready(function() {
 			],
 		});
         cy.elements('node[flag = 0]').style('background-color', 'green');
-        cy.elements('node[flag = 1]').style('background-color', 'red');
+        cy.elements('node[flag = 1]').style('background-color', 'red'); 
+        moves = copyObject(Object.values(data.moves));
+        origins = [cy.nodes('node[flag = 0]').id()];
+        $("#ant_qty").text(data.ant_qty);
+        $("#node_qty").text(data.nodes.length);
+        $("#edge_qty").text(data.edges.length);
+        $("#path_qty").text(data.paths.length);
+        $("#rounds").text(k);
+        $("#out").text(ants_out);
 		document.getElementById("layoutButton").addEventListener("click", function(){
             var layout = cy.layout({
                 name: 'cose-bilkent',
@@ -62,21 +82,6 @@ $(document).ready(function() {
 		    layout.run();
 		});
 
-
-        var moves = copyObject(Object.values(data.moves));
-        var origins = [cy.nodes('node[flag = 0]').id()];
-        var tunnels = [];
-        var tunnel;;
-        var from = [];
-        var k = 0;
-        var ants_out = 0;
-        $("#ant_qty").text(data.ant_qty);
-        $("#node_qty").text(data.nodes.length);
-        $("#edge_qty").text(data.edges.length);
-        $("#path_qty").text(data.paths.length);
-        $("#rounds").text(k);
-        $("#out").text(ants_out);
-     //   console.log(moves);
 
         $("#reset").click(function() {
             k = 0;
@@ -116,12 +121,11 @@ $(document).ready(function() {
                     var e2 = (edge.source().id() == path[j + 1] && edge.target().id() == path[j]);
                     return e1 || e2;
                 });
-              //  console.log(tunnel.id());
                 tunnel.style('line-color', color);
             }
         }
         
-        function getRandomColor() {
+        function        getRandomColor() {
             var letters = '0123456789ABCDEF';
             var color = '#';
             
@@ -133,9 +137,7 @@ $(document).ready(function() {
 
         $("#next").click(function() {
             if (k < data.rounds) {
-               // console.log(k);
                 var points = moves[k];
-                //console.log(points);
                 origins.forEach(function(origin) {
                     if (origin.dest != cy.nodes('node[flag = 0]').id()
                     && origin.dest != cy.nodes('node[flag = 1]').id()) {
@@ -202,7 +204,6 @@ $(document).ready(function() {
         function        getParentMatchingAntId(ant_id) {
             var matching_node;
             data.nodes.forEach(function(node) {
-                //console.log(node.data.id, node.data.ant_id);
                 if (node.data.ant_id == ant_id) {
                     matching_node = cy.nodes('node[id = "' + node.data.id + '"]');;
                 }
@@ -210,24 +211,20 @@ $(document).ready(function() {
             return (matching_node);
         }
 
-        var time; 
-        var pause = false;
-
         $("#play").click(function() {
             pause = false;
             play_button();
  
           });
         
-        function    play_button() {
+        function        play_button() {
             var timeOut;
-            if (data.edges.length > 100 && data.ant_qty > 100)
+            if (data.moves.length > 50)
                 timeOut = 10;
-            else if (data.edges.length < 50 && data.ant_qty < 40)
-                timeOut = 500;
-            else
+            else if (data.moves.length > 20)
                 timeOut = 200;
-            //console.log(timeOut);
+            else
+                timeOut = 500;
             if (ants_out != data.ant_qty && pause == false) {
                 setTimeout(function() {
                     $("#next").trigger("click");
@@ -246,6 +243,6 @@ $(document).ready(function() {
 	});
 });
 
-function    copyObject(src) {
+function            copyObject(src) {
     return Object.assign({}, src);
 }

@@ -6,7 +6,7 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/31 12:46:19 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/06/26 16:33:33 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/07/01 00:30:14 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static bool	find_paths(t_anthill *anthill, t_list **paths)
 			return (false);
 		complete_paths(paths);
 		ret = test_solution(anthill, *paths, anthill->ant_qty);
-		if (ret > anthill->rounds || ret == 0)
+		if (ret >= anthill->rounds || ret == 0)
 		{
 			ft_lstdel(paths, del_steps);
 			*paths = previous_paths;

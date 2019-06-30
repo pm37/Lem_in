@@ -6,7 +6,7 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/21 13:43:17 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/06/29 13:04:41 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/07/01 00:30:49 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ unsigned long 	 test_solution(t_anthill *anthill, t_list *paths
 	rounds += ((t_path *)used_path->content)->len - 1;
 	if (anthill->option & DISPLAY_PATHS)
 	{
-		if (rounds > anthill->rounds)
+		if (rounds >= anthill->rounds)
 			ft_printf(
 			"This solution would take {red}%ld rounds{nc}\n"
 			, rounds);

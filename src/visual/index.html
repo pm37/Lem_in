@@ -20,19 +20,28 @@
    	 }
 	 #cy {
 		display: block;
-        width: 1400px;
-        height: 600px;
+        margin: 0;
+        margin-left: -25%;
+        width: 1000px;
+        height: 550px;
 	}
-    .column {
+    .side {
         float: left;
         width: 30%;
+    }
+    .content {
+        float: left;
+        width: 70%;
+    }
+    .header {
+        width: 40%;
     }
     .row:after {
         content: '';
         clear: both;
         display: table;
     }
-    .moves_info {
+    .info {
         width: 190px;
         height: 120px;
         background-color: rgb(56, 56, 56);
@@ -89,8 +98,8 @@
     </style>
   </head>
   <body>
-    <div class="row">
-        <div class="column">
+    <div class="side">
+        <div class="info">
             <div class="moves_info">
                 <p id="ants_count">Number of ants:<p id="ant_qty"></p></p>
                 <p id="nodes_count">Number of rooms:<p id="node_qty"></p></p>
@@ -99,7 +108,9 @@
                 <p id="rounds_count">Rounds elapsed:<p id="rounds"></p></p>
                 <p id="ants_out">Ants out:<p id="out"></p></p></div>
         </div>
-        <div class="column">
+    </div>
+    <div class="content">
+        <div class="header">
             <div class="buttons">
   	            <button id="randomize" type="button">Randomize</button>
 	            <button id="layoutButton" type="button">CoSE-Bilkent</button>
@@ -110,7 +121,7 @@
                 <button id="pause" type="button">Pause</button>
             </div>
         </div>
+  	    <div id="cy"></div>
     </div>
-  	<div id="cy"></div>
   </body>
 </html>
