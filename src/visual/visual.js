@@ -6,7 +6,7 @@
 //   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2019/06/26 14:46:10 by bwan-nan          #+#    #+#             //
-//   Updated: 2019/07/01 00:20:42 by bwan-nan         ###   ########.fr       //
+//   Updated: 2019/07/01 16:43:46 by bwan-nan         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -136,6 +136,7 @@ $(document).ready(function() {
         }
 
         $("#next").click(function() {
+			var color = getRandomColor();
             if (k < data.rounds) {
                 var points = moves[k];
                 origins.forEach(function(origin) {
@@ -151,7 +152,7 @@ $(document).ready(function() {
                 points.forEach(function(point) {
                     if (point.dest != cy.nodes('node[flag = 1]').id()) {
                         cy.nodes('node[id = "' + point.dest + '"]')
-                            .style('background-color', 'rgb(252, 181, 74)');
+                            .style('background-color', color);
 
                     } else {
                         ants_out++;

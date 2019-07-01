@@ -6,23 +6,23 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/21 14:19:06 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/06/21 14:31:09 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/07/01 17:12:28 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static int 	add_to_queue(t_list **queue, t_list *room)
+static int 		add_to_queue(t_list **queue, t_list *room, t_list *current)
 {
-	t_list		new;
+	t_queue		new;
 	t_list		*node;
-	t_list		*from;
 
 	if (!(node = ft_lstnew(&new, sizeof(t_list))))
 		return (0);
-	from = (*queue)->content;
-	node->content = (void *)room;
+	((t_queue *)node->content)->room = room;
 	ft_lstappend(queue, node);
+	((t_room *)room->content)->previous = current;
+	((t_room *)room->content)->visited = true;
 	return (1);
 }
 
@@ -50,7 +50,7 @@ int 		complete_queue(t_list *queue, t_list *end)
 	t_list	*room;
 	t_list	*current;
 
-	current = (t_list *)queue->content;
+	current = ((t_queue *)queue->content)->room;
 	tunnel = ((t_room *)current->content)->tunnels;
 	while (tunnel)
 	{
@@ -60,10 +60,8 @@ int 		complete_queue(t_list *queue, t_list *end)
 			tunnel = tunnel->next;
 			continue ;
 		}
-		if (!add_to_queue(&queue, room))
+		if (!add_to_queue(&queue, room, current))
 			return (0);
-		((t_room *)room->content)->previous = current;
-		((t_room *)room->content)->visited = true;
 		if (((t_room *)room->content)->end == 1)
 			return (1);
 		if (going_to_deviate(current, room))
@@ -77,11 +75,11 @@ int 		complete_queue(t_list *queue, t_list *end)
 
 int		init_queue(t_list **queue, t_list *start)
 {
-	t_list	new;
+	t_queue	new;
 
 	if (!(*queue = ft_lstnew(&new, sizeof(t_list))))
 		return (0);
-	(*queue)->content = (void *)start;
+	((t_queue *)(*queue)->content)->room = start;
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/31 13:53:37 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/06/24 16:12:46 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/07/01 16:58:38 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	init_path(t_list **paths, t_list *room)
 	return (1);
 }
 
-int		init_paths(t_list **paths, t_list *start, unsigned int option)
+int			init_paths(t_list **paths, t_list *start, unsigned int option)
 {
 	t_list		*room;
 	t_list		*tunnel;

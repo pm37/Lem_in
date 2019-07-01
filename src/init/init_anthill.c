@@ -6,7 +6,7 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/23 12:28:21 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/06/26 16:33:11 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/07/01 16:57:56 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static int		create_tunnels(t_anthill *anthill, t_list *input)
 		if (is_a_comment(((t_input *)input->content)->line))
 		{
 			input = input->next;
-			continue;
+			continue ;
 		}
 		if (!add_tunnel(anthill, ((t_input *)input->content)->line))
 			return (0);
@@ -74,7 +74,7 @@ int				create_anthill(t_anthill *anthill, t_list *input)
 	while (input && !end_of_rooms(((t_input *)input->content)->line))
 	{
 		if (!add_room(anthill, &input))
-			return (0); // && ret_freeanthill();
+			return (0);
 		input = input->next;
 	}
 	if (!anthill->start || !anthill->end)

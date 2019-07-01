@@ -6,7 +6,7 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/21 14:01:32 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/06/21 14:02:52 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/07/01 17:23:14 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,12 @@ static void	set_usage(t_list *src, t_list *dest, bool is_previous)
 		((t_tunnel *)tunnel->content)->usage = 0;
 }
 
-void 		set_tunnels_usage(t_list *end)
+void 		set_tunnels_usage(t_list *end, t_list **queue)
 {
 	t_list	*room;
 	t_list	*previous;
 
+	ft_lstdel(queue, del_steps);
 	room = end;
 	while (room)
 	{

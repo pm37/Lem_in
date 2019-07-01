@@ -6,7 +6,7 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/21 11:56:09 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/01/08 00:26:47 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/07/01 16:18:53 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <stdlib.h>
 #include "get_next_line.h"
 
-static int		update_line(t_lst *elem, char **line)
+static int		update_line(t_gnl *elem, char **line)
 {
 	char	*tmp;
 	int		i;
@@ -31,20 +31,21 @@ static int		update_line(t_lst *elem, char **line)
 		elem->str = ft_strdup(ft_strchr(elem->str, '\n') + 1);
 	else
 		elem->str = ft_strnew(0);
-	free(tmp);
+	ft_strdel(&tmp);
 	return (1);
 }
 
-static t_lst	*ft_lstcreate(const int fd, t_lst **list)
+static t_list	*init_list(t_list **list, const int fd)
 {
-	t_lst *tmp;
+	t_gnl	new;
+	t_list	*node;
 
-	if (!(tmp = (t_lst *)malloc(sizeof(t_lst))))
+	new.fd = fd;
+	new.str = NULL;
+	if (!(node = ft_lstnew(&new, sizeof(t_gnl))))
 		return (NULL);
-	tmp->fd = fd;
-	tmp->str = NULL;
-	tmp->next = *list;
-	return (tmp);
+	ft_lstappend(list, node);
+	return (node);
 }
 
 static void		update_str(const int fd, char **str)
@@ -58,37 +59,47 @@ static void		update_str(const int fd, char **str)
 		buffer[ret] = '\0';
 		tmp = *str;
 		*str = ft_strjoin(*str, buffer);
-		free(tmp);
+		ft_strdel(&tmp);
 		if (ft_strchr(*str, '\n'))
 			break ;
 	}
 }
 
+static void		del_list(void *content, size_t size)
+{
+	t_gnl	*elem;
+
+	elem = (t_gnl *)content;
+	if (content && size)
+	{
+		ft_strdel(&elem->str);
+		free(content);
+	}
+}
+
 int				get_next_line(const int fd, char **line)
 {
-	static t_lst	*list = NULL;
-	t_lst			*elem;
+	static t_list	*list = NULL;
+	t_list			*elem;
 
 	if (read(fd, 0, 0) == -1 || BUFF_SIZE <= 0)
 		return (-1);
 	elem = list;
 	while (elem)
 	{
-		if (elem->fd == fd)
+		if (((t_gnl *)elem->content)->fd == fd)
 			break ;
 		elem = elem->next;
 	}
 	if (elem == NULL)
-	{
-		if (!(elem = ft_lstcreate(fd, &list)))
+		if (!(elem = init_list(&list, fd)))
 			return (-1);
-		list = elem;
-	}
-	if (elem->str == NULL)
-		elem->str = ft_strnew(0);
-	if (!ft_strchr(elem->str, '\n'))
-		update_str(fd, &(elem->str));
-	if (elem->str[0])
-		return (update_line(elem, line));
+	if (((t_gnl *)elem->content)->str == NULL)
+		((t_gnl *)elem->content)->str = ft_strnew(0);
+	if (!ft_strchr(((t_gnl *)elem->content)->str, '\n'))
+		update_str(fd, &(((t_gnl *)elem->content)->str));
+	if (((t_gnl *)elem->content)->str[0])
+		return (update_line(elem->content, line));
+	ft_lstdel(&list, del_list);
 	return (0);
 }

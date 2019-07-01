@@ -6,7 +6,7 @@
 #    By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/21 16:04:21 by bwan-nan          #+#    #+#              #
-#    Updated: 2019/06/26 12:12:24 by bwan-nan         ###   ########.fr        #
+#    Updated: 2019/07/01 16:52:48 by bwan-nan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,16 +50,12 @@ LIPATH = libft/inc/
 
 INCS += lem_in.h
 
-SRC += free_tab.c
-SRC += ret_freeline.c
 SRC += ret_freetab.c
-SRC += ret_print.c
+SRC += print_and_free.c
 SRC += print_paths.c
 SRC += print_input.c
-SRC += compare_steps.c
-SRC += clean_paths.c
 SRC += del_functions.c
-SRC += copy_functions.c
+
 SRC += is_a_comment.c
 
 SRC += lem_in.c
@@ -69,7 +65,6 @@ SRC += init_anthill.c
 SRC += add_rooms.c
 SRC += find_paths.c
 SRC += init_paths.c
-SRC += add_paths.c
 SRC += init_ants.c
 SRC += add_ants.c
 SRC += update_queue.c
@@ -88,7 +83,6 @@ OBJ = $(patsubst %.c, $(OPATH)%.o, $(SRC))
 vpath	%.c src/
 vpath	%.c src/tools/
 vpath	%.c src/add/
-vpath	%.c src/clean/
 vpath	%.c src/display/
 vpath	%.c src/init/
 vpath	%.c src/algo/

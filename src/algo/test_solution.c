@@ -6,14 +6,14 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/21 13:43:17 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/07/01 00:30:49 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/07/01 17:22:22 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void		update_data(t_anthill *anthill, unsigned long  rounds
-		, t_list **paths)
+void			update_data(t_anthill *anthill, unsigned long  rounds
+				, t_list **paths)
 {
 	t_list	*room;
 
@@ -68,7 +68,7 @@ static t_list 	*get_longest_path(t_list *path, unsigned int ant_qty)
 }
 
 unsigned long 	 test_solution(t_anthill *anthill, t_list *paths
-		, unsigned int ant_qty)
+				, unsigned int ant_qty)
 {
 	t_list	*used_path;
 	unsigned long 	rounds;

@@ -6,7 +6,7 @@
 /*   By: pimichau <pimichau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/14 14:38:19 by pimichau          #+#    #+#             */
-/*   Updated: 2019/06/24 18:14:30 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/07/01 17:14:57 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,15 @@ int		main(int ac, char **av)
 	paths = NULL;
 	input = NULL;
 	if (!get_input(&input))
-		return (0);
+		return (free_input(&input, -1));
 	if (!create_anthill(&anthill, input))
-		return (ret_print(0, "ERROR")); // free everything
+		return (print_and_free(&anthill, &input, &paths, "ERROR"));
 	get_option(&anthill, ac, av);
 	if (!(get_paths(&anthill, anthill.start, anthill.end, &paths)))
-		return (ret_print(0, "ERROR"));
+		return (print_and_free(&anthill, &input, &paths, "ERROR"));
 	init_ants(&anthill);
 	if (!anthill.option)
 		print_input(input);
-	print_output(&anthill, paths);
-	//ft_putnbrendl(anthill.rounds);
-	return (0);
+//	print_output(&anthill, paths);
+	return (print_and_free(&anthill, &input, &paths, NULL));
 }

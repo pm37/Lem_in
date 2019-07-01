@@ -6,7 +6,7 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/21 14:33:41 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/06/21 14:54:33 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/07/01 15:34:35 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void 	reset_visited_rooms(t_list *dev_room
 
 	while (queue)
 	{
-		room = queue->content;
+		room = ((t_queue *)queue->content)->room;
 		((t_room *)room->content)->visited = false;
 		((t_room *)room->content)->deviation = false;
 		((t_room *)room->content)->previous = NULL;
