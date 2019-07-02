@@ -6,7 +6,7 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/23 12:28:21 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/07/01 16:57:56 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/07/02 12:51:16 by pimichau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ static int		create_tunnels(t_anthill *anthill, t_list *input)
 
 int				create_anthill(t_anthill *anthill, t_list *input)
 {
-
 	init_anthill(anthill);
 	while (input && is_a_comment(((t_input *)input->content)->line))
 		input = input->next;

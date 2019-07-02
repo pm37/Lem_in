@@ -1,6 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   print_solution.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pimichau <pimichau@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/07/02 12:49:21 by pimichau          #+#    #+#             */
+/*   Updated: 2019/07/02 12:50:34 by pimichau         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lem_in.h"
 
-static void 	move_ants_from_start(t_list *ant, t_anthill *anthill, t_list *paths)
+static void		move_ants_from_start(t_list *ant, t_anthill *anthill
+				, t_list *paths)
 {
 	t_list	*path;
 	t_room	*dest_room;
@@ -26,7 +39,7 @@ static void 	move_ants_from_start(t_list *ant, t_anthill *anthill, t_list *paths
 	ft_putchar('\n');
 }
 
-static void 	move_ants_forward(t_anthill *anthill, t_list *paths)
+static void		move_ants_forward(t_anthill *anthill, t_list *paths)
 {
 	t_list	*ant;
 	t_room	*position;
@@ -66,7 +79,7 @@ static void		move_all_ants(t_anthill *anthill)
 	anthill->rounds = 1;
 }
 
-void       		print_output(t_anthill *anthill, t_list *paths)
+void			print_output(t_anthill *anthill, t_list *paths)
 {
 	t_path	*path;
 

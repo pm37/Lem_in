@@ -6,7 +6,7 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/31 12:46:19 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/07/01 17:23:25 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/07/02 11:58:08 by pimichau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 
 bool			bfs(t_list *start, t_list *end, t_list **queue)
 {
-	t_list		*elem;
-	t_list		*room;
-	bool 			found_augmented_path;
+	t_list	*elem;
+	t_list	*room;
+	bool	found_augmented_path;
 
 	found_augmented_path = false;
 	if (!init_queue(queue, start))
@@ -68,7 +68,7 @@ static bool		find_paths(t_anthill *anthill, t_list **paths)
 	return (anthill->rounds != LONG_MAX && ret != 0);
 }
 
-bool		get_paths(t_anthill *anthill, t_list *start, t_list *end
+bool			get_paths(t_anthill *anthill, t_list *start, t_list *end
 			, t_list **paths)
 {
 	if (start_linked_to_end(start, end))
