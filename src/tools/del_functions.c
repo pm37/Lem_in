@@ -6,7 +6,7 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 19:12:54 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/07/01 17:02:57 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/07/02 12:53:24 by pimichau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void		del_room(void *content, size_t size)
 
 	room = (t_room *)content;
 	if (content && size)
-	{	
+	{
 		ft_strdel(&room->name);
 		ft_lstdel(&room->tunnels, del_steps);
 		free(content);
@@ -38,7 +38,7 @@ void		del_input(void *content, size_t size)
 	input = (t_input *)content;
 	if (content && size)
 	{
-		ft_strdel(&input->line);	
+		ft_strdel(&input->line);
 		free(content);
 	}
 }

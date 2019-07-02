@@ -6,13 +6,13 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/21 13:43:17 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/07/01 17:22:22 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/07/02 12:42:31 by pimichau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void			update_data(t_anthill *anthill, unsigned long  rounds
+void			update_data(t_anthill *anthill, unsigned long rounds
 				, t_list **paths)
 {
 	t_list	*room;
@@ -21,7 +21,8 @@ void			update_data(t_anthill *anthill, unsigned long  rounds
 	while (room)
 	{
 		((t_room *)room->content)->next = ((t_room *)room->content)->new_next;
-		((t_room *)room->content)->path_id = ((t_room *)room->content)->new_path_id;
+		((t_room *)room->content)->path_id = ((t_room *)room->content)
+		->new_path_id;
 		((t_room *)room->content)->previous = NULL;
 		((t_room *)room->content)->visited = false;
 		((t_room *)room->content)->deviation = false;
@@ -36,7 +37,7 @@ void			update_data(t_anthill *anthill, unsigned long  rounds
 	anthill->rounds = rounds;
 }
 
-static void 	increment_sent_values(t_list *path)
+static void		increment_sent_values(t_list *path)
 {
 	while (path)
 	{
@@ -45,11 +46,11 @@ static void 	increment_sent_values(t_list *path)
 	}
 }
 
-static t_list 	*get_longest_path(t_list *path, unsigned int ant_qty)
+static t_list	*get_longest_path(t_list *path, unsigned int ant_qty)
 {
 	t_list			*head;
-	unsigned int	 	ant_qty_out;
-	int 			path_len;
+	unsigned int	ant_qty_out;
+	int				path_len;
 
 	if (!path->next)
 		return (path);
@@ -67,11 +68,11 @@ static t_list 	*get_longest_path(t_list *path, unsigned int ant_qty)
 	return (get_longest_path(head->next, ant_qty));
 }
 
-unsigned long 	 test_solution(t_anthill *anthill, t_list *paths
+unsigned long	test_solution(t_anthill *anthill, t_list *paths
 				, unsigned int ant_qty)
 {
-	t_list	*used_path;
-	unsigned long 	rounds;
+	t_list			*used_path;
+	unsigned long	rounds;
 
 	rounds = 0;
 	used_path = paths;

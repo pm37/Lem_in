@@ -6,17 +6,17 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/21 13:55:42 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/06/24 14:54:47 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/07/02 11:55:24 by pimichau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static void 	complete_path(t_list *path, t_list *room)
+static void		complete_path(t_list *path, t_list *room)
 {
 	t_list	*tunnel;
 	t_list	*next_room;
-	int 		path_id;
+	int		path_id;
 
 	path_id = ((t_path *)path->content)->id;
 	tunnel = ((t_room *)room->content)->tunnels;
@@ -37,20 +37,20 @@ static void 	complete_path(t_list *path, t_list *room)
 	}
 }
 
-static int 	sort_by_len(void *a, void *b)
+static int		sort_by_len(void *a, void *b)
 {
-	t_path 		*path1;
-	t_path 		*path2;
+	t_path	*path1;
+	t_path	*path2;
 
 	path1 = (t_path *)a;
 	path2 = (t_path *)b;
 	return (path1->len < path2->len);
 }
 
-void		complete_paths(t_list **paths)
+void			complete_paths(t_list **paths)
 {
 	t_list	*room;
-	t_list 	*elem;
+	t_list	*elem;
 
 	elem = *paths;
 	while (elem)

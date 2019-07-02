@@ -6,13 +6,13 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/21 14:19:06 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/07/01 17:12:28 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/07/02 12:45:42 by pimichau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static int 		add_to_queue(t_list **queue, t_list *room, t_list *current)
+static int		add_to_queue(t_list **queue, t_list *room, t_list *current)
 {
 	t_queue		new;
 	t_list		*node;
@@ -26,12 +26,12 @@ static int 		add_to_queue(t_list **queue, t_list *room, t_list *current)
 	return (1);
 }
 
-static bool 	tunnel_is_usable(t_list *current, t_list *tunnel, t_list *end)
+static bool		tunnel_is_usable(t_list *current, t_list *tunnel, t_list *end)
 {
 	t_list		*room;
 	t_room		*dest;
-	t_room 		*src;
-	int		usage;
+	t_room		*src;
+	int			usage;
 
 	src = (t_room *)current->content;
 	room = ((t_tunnel *)tunnel->content)->room;
@@ -44,7 +44,7 @@ static bool 	tunnel_is_usable(t_list *current, t_list *tunnel, t_list *end)
 	&& !(src->deviation && usage == 0));
 }
 
-int 		complete_queue(t_list *queue, t_list *end)
+int				complete_queue(t_list *queue, t_list *end)
 {
 	t_list	*tunnel;
 	t_list	*room;
@@ -73,13 +73,12 @@ int 		complete_queue(t_list *queue, t_list *end)
 	return (1);
 }
 
-int		init_queue(t_list **queue, t_list *start)
+int				init_queue(t_list **queue, t_list *start)
 {
-	t_queue	new;
+	t_queue		new;
 
 	if (!(*queue = ft_lstnew(&new, sizeof(t_list))))
 		return (0);
 	((t_queue *)(*queue)->content)->room = start;
 	return (1);
 }
-

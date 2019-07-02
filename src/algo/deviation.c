@@ -6,13 +6,13 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/21 14:33:41 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/07/01 15:34:35 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/07/02 11:57:16 by pimichau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static void 	reset_visited_rooms(t_list *dev_room
+static void		reset_visited_rooms(t_list *dev_room
 		, t_list *prev_room, t_list *queue, t_list *end)
 {
 	t_list	*room;
@@ -46,12 +46,12 @@ static t_list	*get_previous_room(t_list *tunnel)
 	return (NULL);
 }
 
-bool 		deviation_reaches_end(t_list *deviation_room, t_list *end)
+bool			deviation_reaches_end(t_list *deviation_room, t_list *end)
 {
 	t_list	*prev_room;
 	t_list	*tunnels;
-	t_list 	*queue;
-	bool 		ret;
+	t_list	*queue;
+	bool	ret;
 
 	queue = NULL;
 	prev_room = NULL;
@@ -75,12 +75,12 @@ bool 		deviation_reaches_end(t_list *deviation_room, t_list *end)
 	return (ret);
 }
 
-bool 		going_to_deviate(t_list *current, t_list *room)
+bool			going_to_deviate(t_list *current, t_list *room)
 {
-	t_room 	*src;
-	t_room 	*dest;
+	t_room	*src;
+	t_room	*dest;
 	t_list	*tunnel;
-	int 		tunnel_used;
+	int		tunnel_used;
 
 	tunnel_used = 0;
 	src = (t_room *)current->content;
