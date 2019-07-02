@@ -15,6 +15,7 @@ if [ "$1" != "" ] ; then
     elif [ -f "lem_in" ] && [ -f $1 ] ; then
         ./lem_in < $1 > output.txt
         ./lem_in --paths < $1 > paths.txt
+        sleep 1
         python3 $VISUAL_PATH/parser.py output.txt paths.txt > $VISUAL_PATH/data.json
         success=true
     fi

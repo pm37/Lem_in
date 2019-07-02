@@ -6,7 +6,7 @@
 //   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2019/06/26 14:46:10 by bwan-nan          #+#    #+#             //
-//   Updated: 2019/07/01 16:43:46 by bwan-nan         ###   ########.fr       //
+//   Updated: 2019/07/02 14:00:50 by bwan-nan         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -17,8 +17,9 @@ var     origins;
 var     tunnels = [];
 var     tunnel;
 var     from = [];
+var     roundsColors = [];
 var     k = 0;
-var     ants_out = 0;
+var     antsOut = 0;
 var     time; 
 var     pause = false;
 
@@ -61,7 +62,8 @@ $(document).ready(function() {
         $("#edge_qty").text(data.edges.length);
         $("#path_qty").text(data.paths.length);
         $("#rounds").text(k);
-        $("#out").text(ants_out);
+        $("#out").text(antsOut);
+        getAntsColors();
 		document.getElementById("layoutButton").addEventListener("click", function(){
             var layout = cy.layout({
                 name: 'cose-bilkent',
@@ -85,10 +87,10 @@ $(document).ready(function() {
 
         $("#reset").click(function() {
             k = 0;
-            ants_out = 0;
+            antsOut = 0;
             origins = [cy.nodes('node[flag = 0]').id()];
             $("#rounds").text(k);
-            $("#out").text(ants_out);
+            $("#out").text(antsOut);
             moves = copyObject(Object.values(data.moves));
             cy.elements('node').forEach(function(node) {
                 if (node.id() != cy.nodes('node[flag = 1]').id()
@@ -135,8 +137,35 @@ $(document).ready(function() {
             return color;
         }
 
+
+        function        getAntsColors() {
+            var     ids = []
+            var     unique = []
+            data.moves.forEach(function(move) {
+                ids = [];
+                move.forEach(function(ant) {
+                    if (!unique.includes(ant.ant_id)) {
+                        ids.push(ant.ant_id);
+                        unique.push(ant.ant_id);
+                    }
+                });
+                if (ids.length != 0) {
+                    roundsColors.push({'ids': ids, 'color': getRandomColor()});
+                }
+            });
+        }
+
+        function        getCorrespondingColor(ant_id) {
+            var     rightColor;
+            roundsColors.some(function(round) {
+                if (round.ids.includes(ant_id)) {
+                    rightColor = round.color;
+                }
+            });
+            return rightColor;
+        }
+
         $("#next").click(function() {
-			var color = getRandomColor();
             if (k < data.rounds) {
                 var points = moves[k];
                 origins.forEach(function(origin) {
@@ -147,15 +176,17 @@ $(document).ready(function() {
                  }
                 });
                 tunnels.forEach(function(tunnel) {
-                    tunnel.style('line-color', 'white');
+                    if (tunnel.style() && tunnel.style().lineColor != 'white')
+                        tunnel.style('line-color', 'white');
                 });
                 points.forEach(function(point) {
+
                     if (point.dest != cy.nodes('node[flag = 1]').id()) {
                         cy.nodes('node[id = "' + point.dest + '"]')
-                            .style('background-color', color);
+                            .style('background-color', getCorrespondingColor(point.ant_id));
 
                     } else {
-                        ants_out++;
+                        antsOut++;
                     } 
   
                     from = getParentNode(point.dest, point.ant_id);
@@ -166,15 +197,18 @@ $(document).ready(function() {
                     }); 
                     tunnel.style('line-color', 'rgb(252, 181, 74)');
                     tunnels.push(tunnel);
-                    data.nodes.forEach(function(node) {
-                        if (node.data.id == point.dest)
+                     for (var node of data.nodes) {
+                        if (node.data.id == point.dest) {
                             node.data.ant_id = point.ant_id;
-                    });  
+                            break ;
+                        }
+                    } 
+
                 });
                 origins = points;
                 k += 1;
                 $("#rounds").text(k);
-                $("#out").text(ants_out);
+                $("#out").text(antsOut);
             } else {
                 cy.edges().forEach(function(edge) {
                     edge.style('line-color', 'white');
@@ -215,7 +249,6 @@ $(document).ready(function() {
         $("#play").click(function() {
             pause = false;
             play_button();
- 
           });
         
         function        play_button() {
@@ -226,7 +259,7 @@ $(document).ready(function() {
                 timeOut = 200;
             else
                 timeOut = 500;
-            if (ants_out != data.ant_qty && pause == false) {
+            if (antsOut != data.ant_qty && pause == false) {
                 setTimeout(function() {
                     $("#next").trigger("click");
                     play_button();

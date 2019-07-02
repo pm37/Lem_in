@@ -47,7 +47,7 @@ for l in data:
             name, x, y = l.split()
             if flag == 0:
                 start_name = name
-            nodes.append({'data': {'id': name, "flag": flag, "ant_id": 0}})
+            nodes.append({'data': {'id': name, "flag": flag, "ant_id": 0, 'color': 'white'}})
     else:
         i += 1
         ant_moves = l.strip().split()

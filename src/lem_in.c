@@ -6,7 +6,7 @@
 /*   By: pimichau <pimichau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/14 14:38:19 by pimichau          #+#    #+#             */
-/*   Updated: 2019/07/01 17:14:57 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/07/02 11:03:14 by bwan-nan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,6 @@ int		main(int ac, char **av)
 	init_ants(&anthill);
 	if (!anthill.option)
 		print_input(input);
-//	print_output(&anthill, paths);
+	print_output(&anthill, paths);
 	return (print_and_free(&anthill, &input, &paths, NULL));
 }
