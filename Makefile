@@ -6,7 +6,7 @@
 #    By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/21 16:04:21 by bwan-nan          #+#    #+#              #
-#    Updated: 2019/07/01 16:52:48 by bwan-nan         ###   ########.fr        #
+#    Updated: 2019/07/02 16:45:55 by pimichau         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -120,6 +120,7 @@ clean :
 	printf "$(RED)All objects removed from Lem_in\n$(NC)"
 
 fclean : clean
+	$(MAKE) -C $(LPATH) fclean
 	$(CLEANUP) $(OPATH)
 	$(CLEANUP) $(NAME)
 	printf "$(RED)$(NAME) deleted\n$(NC)"

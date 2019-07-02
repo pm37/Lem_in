@@ -53,7 +53,7 @@ for line in sys.stdin:
         for move in tab:
             tab_move = move.split('-')
             if (i in rounds.keys()):
-                rounds[i] += tab_move[1]
+                rounds[i] += [tab_move[1]]
             else:
                 rounds[i] = [tab_move[1]]
         i += 1
@@ -65,5 +65,5 @@ data = {
         }
 jstring = json.dumps(data)
 f = open("parsing.json", "w")
-f.write(jstring)
+f.write("let MAP = JSON.parse(`%s`)" % jstring)
 f.close()

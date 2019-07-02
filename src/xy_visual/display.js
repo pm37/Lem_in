@@ -7,7 +7,7 @@ let room_size = 36;
 let	text_margin = 7;
 
 function setup() {
-	createCanvas(1200, 690);
+	createCanvas(windowWidth, windowHeight);
 	background(0, 0, 255);
 	button = createButton('next');
 	button.position(19, 19);
@@ -90,7 +90,7 @@ function draw_round() {
 
 function init_rooms() {
 	strokeWeight(1);
-	textSize(25);
+	textSize(20);
 	var keys_room = Object.keys(MAP.rooms);
 	for (var i = 0; i < keys_room.length; i++) {
 		room = MAP.rooms[keys_room[i]];
