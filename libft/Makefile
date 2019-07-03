@@ -6,7 +6,7 @@
 #    By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/07 17:52:27 by bwan-nan          #+#    #+#              #
-#    Updated: 2019/06/26 12:11:42 by bwan-nan         ###   ########.fr        #
+#    Updated: 2019/07/03 14:25:42 by pimichau         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -123,6 +123,7 @@ SRC += ft_strr_notchr_index.c
 SRC += count_occurence.c
 SRC += variadic_strjoin.c
 SRC += ft_strstr_delim.c
+SRC += str_isascii.c
 
 # ------------------------------------- Conversions -----------------------------------#
 SRC += ft_atoi.c

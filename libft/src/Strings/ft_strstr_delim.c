@@ -6,13 +6,13 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 19:36:45 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/05/27 12:19:22 by pimichau         ###   ########.fr       */
+/*   Updated: 2019/07/03 14:38:19 by pimichau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static char 	*next_word(const char *str, char delim)
+static char		*next_word(const char *str, char delim)
 {
 	while (*str && *str == delim)
 		str++;

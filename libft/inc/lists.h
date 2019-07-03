@@ -6,7 +6,7 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/01 22:16:55 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/06/04 18:02:55 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/07/03 14:39:33 by pimichau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int					ft_lstcount(t_list *lst);
 t_list				*ft_lstcpy(t_list *source, int (*cpy)(void *, void *));
 t_list				*ft_lstncpy(t_list *source,
 					int size, int (*cpy)(void *, void *));
-void				ft_lstpop(t_list **lst, t_list *target, void (*f)(void *, size_t));
+void				ft_lstpop(t_list **lst, t_list *target
+					, void (*f)(void *, size_t));
 
 #endif

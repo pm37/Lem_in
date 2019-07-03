@@ -6,13 +6,13 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 12:44:36 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/06/24 18:02:08 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/07/03 14:35:55 by pimichau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static int		room_checker(t_anthill *anthill, char **tab)
+static int		room_checker(t_anthill *anthill, char **tab, char *room_name)
 {
 	t_list	*elem;
 	t_room	*tmp;
@@ -30,7 +30,10 @@ static int		room_checker(t_anthill *anthill, char **tab)
 		tmp = (t_room *)elem->content;
 		if (ft_strequ(tmp->name, tab[0])
 		|| (ft_atoi(tab[1]) == tmp->x && ft_atoi(tab[2]) == tmp->y))
+		{
+			ft_strdel(&room_name);
 			return (0);
+		}
 		elem = elem->next;
 	}
 	return (1);
@@ -90,7 +93,7 @@ static int		init_room(t_anthill *anthill, t_room *room, char **tab)
 	return (1);
 }
 
-int				add_room(t_anthill *anthill, t_list **input)
+int				add_room(t_anthill *ath, t_list **input)
 {
 	char			**tab;
 	t_room			room;
@@ -110,11 +113,11 @@ int				add_room(t_anthill *anthill, t_list **input)
 	if (!(*input)
 	|| !(tab = ft_split_whitespaces(((t_input *)(*input)->content)->line)))
 		return (0);
-	if (!init_room(anthill, &room, tab) || !room_checker(anthill, tab)
+	if (!init_room(ath, &room, tab) || !room_checker(ath, tab, room.name)
 	|| !(new = ft_lstnew(&room, sizeof(t_room))))
 		return (ret_freetab(0, tab));
 	if (room.end != -1)
-		init_pointer_to_end(anthill, new, room.end);
-	ft_lstappend(&anthill->rooms, new);
+		init_pointer_to_end(ath, new, room.end);
+	ft_lstappend(&ath->rooms, new);
 	return (ret_freetab(1, tab));
 }

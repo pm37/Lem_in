@@ -6,16 +6,18 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/01 16:30:04 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/07/01 16:35:04 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/07/03 13:24:54 by pimichau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-int			free_input(t_list **input, int exit_value)
+int			free_input(t_list **input, char *exit_msg)
 {
 	ft_lstdel(input, del_input);
-	return (exit_value);
+	if (exit_msg)
+		ft_putendl(exit_msg);
+	return (exit_msg ? -1 : 0);
 }
 
 int			print_and_free(t_anthill *anthill, t_list **input
@@ -26,7 +28,5 @@ int			print_and_free(t_anthill *anthill, t_list **input
 	if (anthill->ants)
 		ft_lstdel(&anthill->ants, del_steps);
 	ft_lstdel(paths, del_steps);
-	if (msg)
-		ft_putendl(msg);
-	return (free_input(input, msg == NULL ? 0 : -1));
+	return (free_input(input, msg));
 }

@@ -6,7 +6,7 @@
 /*   By: bwan-nan <bwan-nan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/21 11:56:09 by bwan-nan          #+#    #+#             */
-/*   Updated: 2019/07/01 16:18:53 by bwan-nan         ###   ########.fr       */
+/*   Updated: 2019/07/03 14:30:14 by pimichau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,19 @@ static t_list	*init_list(t_list **list, const int fd)
 	return (node);
 }
 
-static void		update_str(const int fd, char **str)
+static void		del_list(void *content, size_t size)
+{
+	t_gnl	*elem;
+
+	elem = (t_gnl *)content;
+	if (content && size)
+	{
+		ft_strdel(&elem->str);
+		free(content);
+	}
+}
+
+static int		update_str(const int fd, char **str, t_list **list)
 {
 	int		ret;
 	char	buffer[BUFF_SIZE + 1];
@@ -63,18 +75,12 @@ static void		update_str(const int fd, char **str)
 		if (ft_strchr(*str, '\n'))
 			break ;
 	}
-}
-
-static void		del_list(void *content, size_t size)
-{
-	t_gnl	*elem;
-
-	elem = (t_gnl *)content;
-	if (content && size)
+	if (!str_isascii(str, ret))
 	{
-		ft_strdel(&elem->str);
-		free(content);
+		ft_lstdel(list, del_list);
+		return (0);
 	}
+	return (1);
 }
 
 int				get_next_line(const int fd, char **line)
@@ -97,7 +103,8 @@ int				get_next_line(const int fd, char **line)
 	if (((t_gnl *)elem->content)->str == NULL)
 		((t_gnl *)elem->content)->str = ft_strnew(0);
 	if (!ft_strchr(((t_gnl *)elem->content)->str, '\n'))
-		update_str(fd, &(((t_gnl *)elem->content)->str));
+		if (!update_str(fd, &(((t_gnl *)elem->content)->str), &list))
+			return (-1);
 	if (((t_gnl *)elem->content)->str[0])
 		return (update_line(elem->content, line));
 	ft_lstdel(&list, del_list);
