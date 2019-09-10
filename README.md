@@ -52,15 +52,12 @@ L9-E L10-E
 
 ## Algorithm
 
-We adapted Edmonds-Karp max-flow algorithm to fit our problem. 
-We use a BFS (Breadth First Search) to find paths in the graph.
-What we do is:
+We adapted Edmonds-Karp max-flow algorithm to fit our problem. We use a BFS (Breadth First Search) to find paths in the graph. What we do is:</br>
 - We find the shortest path:</br>
  -> We calculate how many rounds the ants would take to go from starting to ending room using this path.</br>
-- Then we look for an additional path. If we find one, we test the new solution:</br>
- -> While the solution is better, we continue searching for one more path.
- 
- -> Else, the new solution is not better so we keep the previous one.
+- Then we look for an additional path. If we find one, we test the new solution (ants use one more path):</br>
+ -> While the solution is better, we continue searching for one more path.</br>
+ -> When the new solution is not better, we just keep the previous one and stop here.
  
  ## Example
  ```./lem_in --paths < maps/tricky2```
